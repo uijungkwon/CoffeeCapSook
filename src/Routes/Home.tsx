@@ -1,11 +1,15 @@
 import { styled } from "styled-components";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Login from "../Login";
-
+import Login from "./Login";
+import {atom, useRecoilState, useRecoilValue} from "recoil";
+import QuizPage from "../pages/QuizPage";
+import { useState } from "react";
+import { isLoginAtom } from "../atoms";
 const homeBg = require("../images/homeBg.png");
+
 const Wrapper = styled.div`
   overflow-x: hidden;
-  height: 90vh;
+  height:100vh; 
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -20,7 +24,7 @@ const Wrapper = styled.div`
 
 //부모 - 자식 상속관계 이용 => 폰트 크기 조절
 const FontBox = styled.div`
-    margin-top:-400px;
+    margin-top:-200px;
     margin-left:100px;
     position: absolute;
     justify-content: center;
@@ -29,61 +33,52 @@ const FontBox = styled.div`
     h1 {
     font-family:'Just Me Again Down Here', cursive;
     font-size: 80px;
-    margin-left:100px;
-    margin-top:30px;
+    margin-left:50px;
+    margin-top:50px;
     font-weight: bold;
     }
     h2 {
         margin-bottom: 20px;
         font-size: 40px;
-        margin-top: 23px;
+        margin-top: 40px;
+        font-weight:bold;
     }
     h3 {
-        //margin-bottom: 10px;
+        //margin-top: 200px;
         font-size: 16px;
-
+        margin-left:40px;
     }
 
 `;
-//버튼에 가까이 대면 버튼 커지도록 만들기
-//위치 및 디자인 조정 필요
-
-const ButtonLink = styled(Link)`
-    font-size:27px;
-    margin-left:70px;
-    margin-bottom:40px;
-
+const Button = styled.button`
+        width:220px;
+        height:50px;
+		background-color: whitesmoke;
+		border: none;
+		border-radius: 10px;
+		font-size: 27px;
+		color: ${(props) => props.theme.accentColor};
+        margin-top:200px;
+        margin-left:50px;
 `;
-//폰트 크기가 안바뀜
-const ButtonBox = styled.div`
-    width:220px;
-    height:45px;
-	background-color: rgba(254, 176, 98, 0.798);
-	border: none;
-	border-radius: 10px;
-	color: black;
-    margin-top:170px;
-    margin-left:50px;
-    //text-align: center;
-`;
-
 function Home(){
+    //1) 로그인 여부 확인
+    const log = useRecoilValue(isLoginAtom);//아이디를 입력했는지 알려주는 boolean 값
+    console.log(`값 : ${log}`);
+    
     return (
         <>
-        <Wrapper>
+        <Wrapper >
             <FontBox>
-                <h1>coffe capsook</h1>
+                <h1>coffee capsook</h1>
                 <h2>당신의 커피 취향은 무엇인가요?</h2>
-                <h3>coffe capsook에서 당신의 취향에 맞는 커피 캡슐을 추천해드립니다 </h3>
+                {log ?(<h3>시작 버튼을 눌러 커피 캡슐 취향 테스트를 시작해보세요.</h3>):(<h3>로그인 후 테스트를 시작하면 당신만의 커피 캡슐을 추천해드립니다. </h3>)}
+                
             </FontBox>
-            <ButtonBox>
-                <ButtonLink to="/Login">Log in</ButtonLink>
-            </ButtonBox>
-             
+            {log ?  (<Button><Link to = "/QuizPage">시작 하기</Link></Button>) :(<Button><Link to = "/Login">로그인</Link></Button>)}
         </Wrapper>  
            
         </>
     );
 }
 export default Home;
-//
