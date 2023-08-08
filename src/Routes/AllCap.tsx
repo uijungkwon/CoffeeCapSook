@@ -72,31 +72,22 @@ const Option = styled.option`
     width:100px;
     height:100px;
 `;
-const Ul = styled.ul``;
+const Ul = styled.ul`
+ 
+ `;
+ const BigBoxUl = styled.ul`
+
+ color:black;
+ font-size:20px;
+ list-style-type: square;
+ margin-bottom:20px;
+ 
+ `;
 const Li  = styled.li`
-  width: 500px;
-  background-color: #dcdcdcb8;
-  color: ${(props) => props.theme.bgColor};
-  border-radius: 15px;
-  margin-bottom: 10px;
-  
-  button {
-    display: flex; //요소를 감싸는 속성
-    align-items: center;
-    margin-left:40px;
-    margin-top:-50px;
-    padding: 20px;
-    transition: color 0.2s ease-in;
-  }
-  &:hover {
-    //&: 바로 위 태그를 가리킴 // 글자에 마우스를 가져다 대면 색깔 변화 (hover)
-    button {
-      color: #0059ff;
-      cursor: pointer;
+  color:black;
+  strong{
+      font-weight:bold;
     }
-  }
-
-
 `;
 const Img = styled.img`
   width: 50px;
@@ -125,7 +116,16 @@ interface CoinInterface {
   type: string;
 }
 const Button = styled.button`
-  background-color: #ffffff1a;
+  background-color: rgba(211, 211, 211, 0.798);
+  font-size:20px;
+  font-weight:bold;
+  width:70px;
+
+  border-radius: 30px;
+  &:hover {//바로 위 태그를 가리킴
+      color: #0059ff;
+      cursor: pointer;
+    }
 `;
 const Overlay = styled(motion.div)`
   position:fixed;
@@ -136,7 +136,7 @@ const Overlay = styled(motion.div)`
   background-color: rgba(0,0,0,0.5);
 `;
 const BigBox = styled(motion.div)<{ ypoint: number }>`
-  width: 40vw;
+  width: 35vw;
   height: 60vh;
   background-Color: whitesmoke;
   border-radius:20px;
@@ -175,10 +175,32 @@ const Box = styled(motion.div)`
     cursor: pointer;
   }
 `;
+const Info = styled.div`
+    width:450px;
+    height:200px;
+    margin: 10px;
+    display: flex;
+    align-items: left;
+    justify-content: center;
+    flex-direction: column;
+    h1{
+        color:black;
+        font-size:20px;
+        text-align: left;
+    }
+    strong{
+      font-weight:bold;
+    }
+    button{
+      color:black;
+        font-size:20px;
+        text-align: left;
+    }
+`;
 function AllCap(){
   //itemId를 생성해서 박스 클릭시에 모달 박스 나올 수 있는 방법도 생각 해보기
   //id 일치시키기!
-  
+  const rarr = "-->";
   const history =useHistory();
   const onBoxClicked = (itemId: number)=>{
     history.push(`/Allcap/${itemId}`);
@@ -189,7 +211,8 @@ function AllCap(){
   
   const onOverlayClick = ()=> history.push("/AllCap/");
   const {scrollY} = useScroll();
-  
+  var url = "sample";
+
   //useMotionValueEvent(scrollY, "change", (latest) => {latest});
   const [position, setPosition] = useState(0);
   function onScroll() {
@@ -205,7 +228,6 @@ function AllCap(){
   
   
     const [index,setIndex] = useState("1");
-    const rarr = "->";
     const [visible,setVisible] =useState(false);
     const onClick = ()=>{
       setVisible((prev) => !prev);
@@ -241,14 +263,14 @@ function AllCap(){
         <AnimatePresence>
         {index=="1" ?  (  //네스프레소
         <Ul>
-          <li>{coffee.slice(40, 113).map((coffee) => (
+          <li>{coffee.slice(38, 112).map((coffee) => (
                   <Box 
                    layoutId={coffee.id +""}
                    key={coffee.id}
                    onClick = {()=> onBoxClicked(coffee.id)}
                    >
                     <Img
-                  //src={require(`../images/capsule/네스프레소/${coffee.name}.webp`)}
+                  src={require(`../images/capsule/${coffee.id}.png`)}
                 /> 
                    {coffee.name} 
                   </Box>
@@ -268,7 +290,7 @@ function AllCap(){
                    onClick = {()=> onBoxClicked(coffee.id)}
                    >
                     <Img
-                  src={require(`../images/capsule/스타벅스/${coffee.name}.png`)}
+                  src={require(`../images/capsule/${coffee.id}.png`)}
                 /> 
                    {coffee.name} 
                   </Box>
@@ -280,7 +302,7 @@ function AllCap(){
 
       {index=="3" ?  ( //일리
         <Ul>
-          <li>{coffee.slice(114,129).map((coffee) => (
+          <li>{coffee.slice(112,128).map((coffee) => (
                   <Box 
                    layoutId={coffee.id +""}
                    key={coffee.id}
@@ -288,7 +310,7 @@ function AllCap(){
                    >
                     <Img
                   //src={require(`../images/capsule/스타벅스/${coffee.name}.png`)}
-                  //src={require(`../images/capsule/일리/${coffee.name}.png`)}
+                  src={require(`../images/capsule/${coffee.id}.png`)}
                 /> 
                    {coffee.name} 
                   </Box>
@@ -300,7 +322,7 @@ function AllCap(){
 
       {index=="4" ?  ( //카누
         <Ul>
-          {coffee.slice(17,30 ).map((coffee) => (
+          {coffee.slice(15,29 ).map((coffee) => (
             <li  key={coffee.id}>
               <Box 
                    layoutId={coffee.id +""}
@@ -308,7 +330,7 @@ function AllCap(){
                    onClick = {()=> onBoxClicked(coffee.id)}
                    >
                     <Img
-                  //src={require(`../images/capsule/카누/${coffee.name}.png`)}
+                  src={require(`../images/capsule/${coffee.id}.png`)}
                 /> 
                    {coffee.name} 
                   </Box>
@@ -321,7 +343,7 @@ function AllCap(){
 
     {index=="5" ?  ( //이디야
         <Ul>
-          <li>{coffee.slice(130, 132).map((coffee) => (
+          <li>{coffee.slice(128, 131).map((coffee) => (
                   <Box 
                    layoutId={coffee.id +""}
                    key={coffee.id}
@@ -329,7 +351,7 @@ function AllCap(){
                    >
                     <Img
                   //src={require(`../images/capsule/스타벅스/${coffee.name}.png`)}
-                  //src={require(`../images/capsule/이디야/${coffee.name}.png`)}
+                  src={require(`../images/capsule/${coffee.id}.png`)}
                 /> 
                    {coffee.name} 
                   </Box>
@@ -341,14 +363,14 @@ function AllCap(){
 
     {index=="6" ?  ( //할리스
         <Ul>
-          <li>{coffee.slice(31, 34).map((coffee) => (
+          <li>{coffee.slice(29, 33).map((coffee) => (
                   <Box 
                    layoutId={coffee.id +""}
                    key={coffee.id}
                    onClick = {()=> onBoxClicked(coffee.id)}
                    >
                     <Img
-                  //src={require(`../images/capsule/스타벅스/${coffee.name}.png`)}
+                  src={require(`../images/capsule/${coffee.id}.png`)}
                   //src={require(`../images/capsule/할리스/${coffee.name}.png`)}
                 /> 
                    {coffee.name} 
@@ -361,14 +383,14 @@ function AllCap(){
 
     {index=="7" ?  ( //폴바셋
         <Ul>
-          <li>{coffee.slice(35, 39).map((coffee) => (
+          <li>{coffee.slice(33, 38).map((coffee) => (
                   <Box 
                    layoutId={coffee.id +""}
                    key={coffee.id}
                    onClick = {()=> onBoxClicked(coffee.id)}
                    >
                     <Img
-                  //src={require(`../images/capsule/스타벅스/${coffee.name}.png`)}
+                  src={require(`../images/capsule/${coffee.id}.png`)}
                   //src={require(`../images/capsule/폴바셋/${coffee.name}.png`)}
                 /> 
                    {coffee.name} 
@@ -381,7 +403,7 @@ function AllCap(){
 
     {index=="8" ?  (//투썸
         <Ul>
-          <li>{coffee.slice(133, 138).map((coffee) => (
+          <li>{coffee.slice(131, 137).map((coffee) => (
                   <Box 
                    layoutId={coffee.id +""}
                    key={coffee.id}
@@ -389,7 +411,7 @@ function AllCap(){
                    >
                     <Img
                     //src={require(`../images/capsule/스타벅스/${coffee.name}.png`)}
-                 // src={require(`../images/capsule/투썸/${coffee.name}.png`)}
+                 src={require(`../images/capsule/${coffee.id}.png`)}
                 /> 
                    {coffee.name} 
                   </Box>
@@ -401,7 +423,7 @@ function AllCap(){
 
     {index=="9" ?  ( //던킨
         <Ul>
-          <li>{coffee.slice(139, 143).map((coffee) => (
+          <li>{coffee.slice(137, 142).map((coffee) => (
                   <Box 
                    layoutId={coffee.id +""}
                    key={coffee.id}
@@ -409,7 +431,7 @@ function AllCap(){
                    >
                     <Img
                     //src={require(`../images/capsule/스타벅스/${coffee.name}.png`)}
-                  //src={require(`../images/capsule/던킨/${coffee.name}.png`)}
+                  src={require(`../images/capsule/${coffee.id}.png`)}
                 /> 
                    {coffee.name} 
                   </Box>
@@ -436,10 +458,39 @@ function AllCap(){
               {
                 clickedBox && 
                 (<>
-                  <h1 style = {{color:"black"}}>
-                    {
-                    coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.name
-                    }</h1>
+                    { 
+                    <>
+                    <img style = {{width:"35%", height:"35%"}} src={require(`../images/capsule/${coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.id}.png` )}/>
+                    <BigBoxUl >
+                      <Li >
+                        <strong>이름: </strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.name} 
+                      </Li>
+                      <br></br>
+                      <Li>
+                      <strong>성분:</strong> {coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.성분}  
+                      </Li>
+                      <br></br>
+                      <Li>
+                      <strong>강도:</strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.강도} 
+                      </Li>
+                      <br></br>
+                      <Li>
+                      <strong>맛:</strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.맛} 
+                      </Li>
+                      <br></br>
+                      <Li>
+                      <strong>머신:</strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.커피머신} 
+                      </Li>
+                      <br></br>
+                      <Li><strong>구매 링크 </strong> {rarr} <Button  onClick={()=>{
+                          url = coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.구매링크 || "/";
+                          window.open(url);
+                          
+                          }}>click</Button></Li>
+                        
+                    </BigBoxUl>
+                    </>
+                    }
                 </>)
               }
               </BigBox>
@@ -453,33 +504,3 @@ function AllCap(){
 }
 
 export default AllCap;
-/*
-
-          <AnimatePresence>
-            
-            {bigRoadMatch ? (
-              <>
-              <Overlay 
-                onClick = {onOverlayClick}
-                exit = {{opacity:0}}
-                animate = {{opacity: 1}}
-              />
-              <BigBox
-                layoutId={bigRoadMatch.params.itemId+""}
-                style = {{top:scrollY.get() + 100, }}
-              >
-              {
-                clickedBox && 
-                (<>
-                  <h1 style = {{color:"black"}}>
-                    {
-                    coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.name
-                    }</h1>
-                </>)
-              }
-              </BigBox>
-            </>
-            ) : null}
-            
-          </AnimatePresence>
-*/

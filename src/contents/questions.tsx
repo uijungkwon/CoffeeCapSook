@@ -1,14 +1,15 @@
+//버튼에 번호 부여 OR 버튼 이름 부여 방법 고민(서버로 값 넘겨주는거 논의)
 const questions = [
     {
         title:"놀러 다닐 때 내가 들고 다니는 것은?",
         content:[
             {
-                answer:"핸드폰만 들어가지만 귀여운 미니백",
-                weight:[3, 0, 0, 3, 3, 3, 3, 0]
+                answer:"귀여운 미니백",
+                weight:[3, 0, 0, 3, 3, 3]
             },
             {
-                answer:"물건이 가득 담기는 보부상백",
-                weight: [0, 0, 5, 4, 0, 0, 0, 5]
+                answer:"물건 가득  보부상백",
+                weight: [0, 0, 5, 4, 0, 0]
             }
         ]
     },
@@ -17,11 +18,11 @@ const questions = [
         content:[
             {
                 answer:"자연 풍경",
-                weight: [4, 4, 0, 0, 0, 0, 0, 0]
+                weight: [4, 4, 0, 0, 0, 0]
             },
             {
                 answer:"도시 풍경",
-                weight: [0, 0, 4, 5, 5, 0, 0, 0]
+                weight: [0, 0, 4, 5, 5, 0]
             }
         ]
     },
@@ -30,11 +31,11 @@ const questions = [
         content:[
             {
                 answer:"한다",
-                weight: [5, 5, 0, 0, 0, 0, 3, 0]
+                weight: [5, 5, 0, 0, 0, 0]
             },
             {
                 answer:"안한다",
-                weight: [0, 0, 5, 5, 5, 0, 3, 0]
+                weight: [0, 0, 5, 5, 5, 0]
             }
         ]
     },
@@ -43,11 +44,11 @@ const questions = [
         content:[
             {
                 answer:"점심에 밥먹고 먹는 커피",
-                weight: [5, 4, 4, 0, 0, 0, 5, 0]
+                weight: [5, 4, 4, 0, 0, 0]
             },
             {
                 answer:"밤샐 때 먹는 커피",
-                weight: [0, 0, 0, 0, 0, 3, 5, 0]
+                weight: [0, 0, 0, 0, 0, 3]
             }
         ]
     },
@@ -56,11 +57,11 @@ const questions = [
         content:[
             {
                 answer:"칸쵸",
-                weight: [3, 5, 0, 0, 3, 0, 0, 0]
+                weight: [3, 5, 0, 0, 3, 0]
             },
             {
                 answer:"포테이토칩",
-                weight: [0, 5, 0, 0, 4, 0, 0, 0]
+                weight: [0, 5, 0, 0, 4, 0]
             }
         ]
     },
@@ -69,11 +70,11 @@ const questions = [
         content:[
             {
                 answer:"프렌치 토스트",
-                weight: [4, 3, 0, 0, 0, 0, 5, 0]
+                weight: [4, 3, 0, 0, 0, 0]
             },
             {
                 answer:"뜨끈한 국밥",
-                weight: [0, 3, 0, 4, 5, 0, 0, 3]
+                weight: [0, 3, 0, 4, 5, 0]
             }
         ]
     },
@@ -82,11 +83,11 @@ const questions = [
         content:[
             {
                 answer:"빵빠레",
-                weight: [5, 0, 4, 3, 3, 0, 0, 0]
+                weight: [5, 0, 4, 3, 3, 0]
             },
             {
                 answer:"폴라포",
-                weight: [4, 4, 3, 5, 5, 0, 0, 0]
+                weight: [4, 4, 3, 5, 5, 0]
             }
         ]
     },
@@ -95,11 +96,11 @@ const questions = [
         content:[
             {
                 answer:"사리곰탕",
-                weight: [5, 0, 5, 0, 0, 0, 5, 0]
+                weight: [5, 0, 5, 0, 0, 0]
             },
             {
                 answer:"열라면",
-                weight: [0, 0, 0, 5, 5, 5, 0, 3]
+                weight: [0, 0, 0, 5, 5, 5]
             }
         ]
     },
@@ -277,7 +278,7 @@ const questions = [
         ]
     },
     {
-        title: "방문한 장소가 마음에 들 때 나는?",
+        title: "방문한 장소가 마음에 들 때 나는?",//9
         content: [
             {
                 answer: "그래도 계획한 만큼만 머물고 다음 장소로 이동할래",
@@ -298,7 +299,7 @@ const questions = [
         ]
     },
     {
-        title: "이번 여행에서 방문할 장소를 <br/> 선택할 때 나는?",
+        title: "이번 여행에서 방문할 장소를 <br/> 선택할 때 나는?",//10
         content: [
             {
                 answer: "사람들이 많이 가는 유명한 장소 위주로 다닐래",

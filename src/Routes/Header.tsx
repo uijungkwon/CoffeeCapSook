@@ -21,7 +21,7 @@ import { isLoginAtom } from "../atoms";
     position: fixed;
     width: 100%;
     top: 0;
-    height: 80px;
+    height: 75px;
     font-size: 15px;
     padding: 20px 20px;
     :hover {
@@ -60,7 +60,7 @@ const LogoItems = styled.ul`
     transition: color 0.3 ease-in-out;
   `;
   const LogItems = styled.ul` //로그인 후 나타내는 div자리
-    margin-left:520px;
+    margin-left:450px;
     display: flex;
     align-items: center;
     font-family: "Hanna";

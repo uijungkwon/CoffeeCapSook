@@ -75,7 +75,7 @@ function Home(){
                 {log ?(<h3>시작 버튼을 눌러 커피 캡슐 취향 테스트를 시작해보세요.</h3>):(<h3>로그인 후 테스트를 시작하면 당신만의 커피 캡슐을 추천해드립니다. </h3>)}
                 
             </FontBox>
-            {log ?  (<Button><Link to = "/QuizPage">시작 하기</Link></Button>) :(<Button><Link to = "/Login">로그인</Link></Button>)}
+            {log ?  (<Button><Link to = "/QuizPage/1">시작 하기</Link></Button>) :(<Button><Link to = "/Login">로그인</Link></Button>)}
         </Wrapper>  
            
         </>
