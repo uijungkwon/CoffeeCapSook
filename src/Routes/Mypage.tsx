@@ -72,31 +72,22 @@ const Option = styled.option`
     width:100px;
     height:100px;
 `;
-const Ul = styled.ul``;
+const Ul = styled.ul`
+ 
+ `;
+ const BigBoxUl = styled.ul`
+
+ color:black;
+ font-size:20px;
+ list-style-type: square;
+ margin-bottom:20px;
+ 
+ `;
 const Li  = styled.li`
-  width: 500px;
-  background-color: #dcdcdcb8;
-  color: ${(props) => props.theme.bgColor};
-  border-radius: 15px;
-  margin-bottom: 10px;
-  
-  button {
-    display: flex; //요소를 감싸는 속성
-    align-items: center;
-    margin-left:40px;
-    margin-top:-50px;
-    padding: 20px;
-    transition: color 0.2s ease-in;
-  }
-  &:hover {
-    //&: 바로 위 태그를 가리킴 // 글자에 마우스를 가져다 대면 색깔 변화 (hover)
-    button {
-      color: #0059ff;
-      cursor: pointer;
+  color:black;
+  strong{
+      font-weight:bold;
     }
-  }
-
-
 `;
 const Img = styled.img`
   width: 50px;
@@ -106,6 +97,13 @@ const Img = styled.img`
 // 해당 브랜드를 선택했을 때, value에 해당하는 캡슐을 보여줌
 interface IProp{
   myname:string;
+}
+
+function Sample({myname}:IProp){ //타입스크립트 - 변수 타입 지정
+ 
+  return(
+    <Wrapper style = {{backgroundColor:"black",width:"100%", height:"700px"}}>{myname}</Wrapper>
+  );
 }
 
 interface CoinInterface {
@@ -118,7 +116,16 @@ interface CoinInterface {
   type: string;
 }
 const Button = styled.button`
-  background-color: #ffffff1a;
+  background-color: rgba(211, 211, 211, 0.798);
+  font-size:20px;
+  font-weight:bold;
+  width:70px;
+
+  border-radius: 30px;
+  &:hover {//바로 위 태그를 가리킴
+      color: #0059ff;
+      cursor: pointer;
+    }
 `;
 const Overlay = styled(motion.div)`
   position:fixed;
@@ -129,8 +136,8 @@ const Overlay = styled(motion.div)`
   background-color: rgba(0,0,0,0.5);
 `;
 const BigBox = styled(motion.div)<{ ypoint: number }>`
-  width: 40vw;
-  height: 60vh;
+  width: 35vw;
+  height: 70vh;
   background-Color: whitesmoke;
   border-radius:20px;
   position: absolute;
@@ -142,6 +149,14 @@ const BigBox = styled(motion.div)<{ ypoint: number }>`
   right: 0;
   margin: 0 auto;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+`;
+const ImgBox = styled.div`
+  margin-top:-50px;
+  margin-bottom:20px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -168,8 +183,43 @@ const Box = styled(motion.div)`
     cursor: pointer;
   }
 `;
+const Info = styled.div`
+    width:450px;
+    height:200px;
+    margin: 10px;
+    display: flex;
+    align-items: left;
+    justify-content: center;
+    flex-direction: column;
+    h1{
+        color:black;
+        font-size:20px;
+        text-align: left;
+    }
+    strong{
+      font-weight:bold;
+    }
+    button{
+      color:black;
+        font-size:20px;
+        text-align: left;
+    }
+`;
 function Mypage(){
-
+  
+  var num = 1;
+  //서버와 반환 타입 의논 - id외에도 다른 캡슐 정보도 함께 반환받아야함.
+  //서버에도 전체 캡슐 데이터 정보가 있어야함 - 데이터 타입 의논
+  //"네스프레소" - 저장된 캡슐이라고 생각
+  const MyData = [
+    {"id":43,"name":"오라피오","성분":"브라질,코스타리카,우간다", "강도":"6","맛":"부드러운 풍미, 은은한 산미, 캐러멜 향","커피머신":"네스프레소 버츄오 머신 ","구매링크":"https://www.nespresso.com/kr/ko/order/capsules/vertuo"},
+    {"id":44,"name":"볼테소","성분":"브라질, 콜롬비아", "강도":"4","맛":"비스킷향, 와인향,마일드","커피머신":"네스프레소 버츄오 머신 ","구매링크":"https://www.nespresso.com/kr/ko/order/capsules/vertuo"},
+    {"id":58,"name":"아이스 포르테","성분":"콜롬비아,인도네시아,에티오피아", "강도":"6","맛":"곡물향, 우디향, 로스팅향","커피머신":"네스프레소 버츄오 머신 ","구매링크":"https://www.nespresso.com/kr/ko/order/capsules/vertuo"},
+    {"id":86,"name":"리스트레토-디카페나토(디카페인)","성분":"브라질,콜롬비아", "강도":"10","맛":"미디엄 다크로스팅, 산미, 쓴맛","커피머신":"네스프레소 오리지널 머신 ","구매링크":"https://www.nespresso.com/kr/ko/order/capsules/original"},
+  ];//서버에서 반환받은 "마이페이지" id 목록이라고 생각
+  
+  var url = "sample";
+  const rarr = "-->";
   const history =useHistory();
   const onBoxClicked = (itemId: number)=>{
     history.push(`/MyPage/${itemId}`);
@@ -182,21 +232,19 @@ function Mypage(){
   const {scrollY} = useScroll();
 
   const [position, setPosition] = useState(0);
-  function onScroll() {
-    setPosition(window.scrollY);
-    console.log(window.scrollY);
-  }
+  const getRandom = (min:number, max:number) =>Math.floor(Math.random() * (max - min) + min);
+  
+  //연습
   useEffect(() => {
-    window.addEventListener("scroll", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
+    num = getRandom(2, 143);
+    //다른 recoil만들어서 데이터 셋 만들기!!
+    console.log(coffee.find(item =>item.id == num)); //맞는 배열 찾을 수 있음
   }, []);
   
   
-    const [index,setIndex] = useState("1");//Select 캡슐 종류 선택 -> index 지정
-    const [visible,setVisible] =useState(false);
-    const onClick = ()=>{
+  const [index,setIndex] = useState("1");//Select 캡슐 종류 선택 -> index 지정
+  const [visible,setVisible] =useState(false);
+  const onClick = ()=>{
       setVisible((prev) => !prev);
     }
 
@@ -228,14 +276,25 @@ function Mypage(){
         <AnimatePresence>
         {index=="1" ?  (  //네스프레소
         <Ul>
-          <li style = {{color:"black"}}>내가 저장한 네스프레소 캡슐</li>
+          <li>{MyData.map((item) => (
+                  <Box 
+                   layoutId={item.id +""}
+                   key={item.id}
+                   onClick = {()=> onBoxClicked(item.id)}
+                   >
+                    <Img
+                  src={require(`../images/capsule/${item.id}.png`)}
+                /> 
+                   {item.name} 
+                  </Box>
+                ))}</li>
         </Ul>
       ):(
         null
       ) }
 
 
-        {index=="2" ?  (//스타벅스
+        {index=="2" ?  (//스타벅스 (id:2~16)
         <Ul>
           <li style = {{color:"black"}}>내가 저장한 스타벅스 캡슐</li>
         </Ul>
@@ -243,7 +302,7 @@ function Mypage(){
         null
       ) }
 
-      {index=="3" ?  ( //일리
+      {index=="3" ?  ( //일리(id:114~129 )
         <Ul>
           <li style = {{color:"black"}}>내가 저장한 일리 캡슐</li>
         </Ul>
@@ -251,7 +310,7 @@ function Mypage(){
         null
       ) }
 
-      {index=="4" ?  ( //카누
+      {index=="4" ?  ( //카누(id:17~30)
         <Ul>
           <li style = {{color:"black"}}>내가 저장한 카누 캡슐</li>
         </Ul>
@@ -259,7 +318,7 @@ function Mypage(){
        null
       ) }
 
-    {index=="5" ?  ( //이디야
+    {index=="5" ?  ( //이디야(id:130~132)
         <Ul>
           <li style = {{color:"black"}}>내가 저장한 이디야 캡슐</li>
         </Ul>
@@ -267,7 +326,7 @@ function Mypage(){
         null
       ) }
 
-    {index=="6" ?  ( //할리스
+    {index=="6" ?  ( //할리스(id:31~34)
         <Ul>
           <li style = {{color:"black"}}>내가 저장한 할리스 캡슐</li>
         </Ul>
@@ -275,7 +334,7 @@ function Mypage(){
         null
       ) }
 
-    {index=="7" ?  ( //폴바셋
+    {index=="7" ?  ( //폴바셋(id:35~39)
         <Ul>
           <li style = {{color:"black"}}>내가 저장한 폴바셋 캡슐</li>
         </Ul>
@@ -283,7 +342,7 @@ function Mypage(){
         null
       ) }
 
-    {index=="8" ?  (//투썸
+    {index=="8" ?  (//투썸(id:133~138)
         <Ul>
           <li style = {{color:"black"}}>내가 저장한 투썸 캡슐</li>
         </Ul>
@@ -291,7 +350,7 @@ function Mypage(){
         null
       ) }
 
-    {index=="9" ?  ( //던킨
+    {index=="9" ?  ( //던킨(id:139~143)
         <Ul>
           <li style = {{color:"black"}}>내가 저장한 던킨 캡슐 </li>
         </Ul>
@@ -299,15 +358,7 @@ function Mypage(){
         null
       ) }
           </AnimatePresence>
-          
-        </Wrapper>
-        </>
-    );
-}
-
-export default Mypage;
-/*
-<AnimatePresence>
+          <AnimatePresence>
             
             {bigRoadMatch ? (
               <>
@@ -324,14 +375,51 @@ export default Mypage;
               {
                 clickedBox && 
                 (<>
-                  <h1 style = {{color:"black"}}>
-                    {
-                    coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.name
-                    }</h1>
+                    { 
+                    <>
+                    <ImgBox>
+                      <img style = {{width:"100%", height:"100%"}} src={require(`../images/capsule/${coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.id}.png` )}/>
+                    </ImgBox>
+                    <BigBoxUl >
+                      <Li >
+                        <strong>이름: </strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.name} 
+                      </Li>
+                      <br></br>
+                      <Li>
+                      <strong>성분:</strong> {coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.성분}  
+                      </Li>
+                      <br></br>
+                      <Li>
+                      <strong>강도:</strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.강도} 
+                      </Li>
+                      <br></br>
+                      <Li>
+                      <strong>맛:</strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.맛} 
+                      </Li>
+                      <br></br>
+                      <Li>
+                      <strong>머신:</strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.커피머신} 
+                      </Li>
+                      <br></br>
+                      <Li><strong>구매 링크 </strong> {rarr} <Button  onClick={()=>{
+                          url = coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.구매링크 || "/";
+                          window.open(url);
+                          
+                          }}>click</Button></Li>
+                        
+                    </BigBoxUl>
+                    </>
+                    }
                 </>)
               }
               </BigBox>
             </>
             ) : null}
             
-          </AnimatePresence> */
+          </AnimatePresence>
+        </Wrapper>
+        </>
+    );
+}
+
+export default Mypage;

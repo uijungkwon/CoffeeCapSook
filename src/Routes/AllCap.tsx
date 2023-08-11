@@ -137,7 +137,7 @@ const Overlay = styled(motion.div)`
 `;
 const BigBox = styled(motion.div)<{ ypoint: number }>`
   width: 35vw;
-  height: 60vh;
+  height: 70vh;
   background-Color: whitesmoke;
   border-radius:20px;
   position: absolute;
@@ -149,6 +149,14 @@ const BigBox = styled(motion.div)<{ ypoint: number }>`
   right: 0;
   margin: 0 auto;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+`;
+const ImgBox = styled.div`
+  margin-top:-50px;
+  margin-bottom:20px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -460,7 +468,9 @@ function AllCap(){
                 (<>
                     { 
                     <>
-                    <img style = {{width:"35%", height:"35%"}} src={require(`../images/capsule/${coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.id}.png` )}/>
+                    <ImgBox>
+                      <img style = {{width:"100%", height:"100%"}} src={require(`../images/capsule/${coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.id}.png` )}/>
+                    </ImgBox>
                     <BigBoxUl >
                       <Li >
                         <strong>이름: </strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.name} 

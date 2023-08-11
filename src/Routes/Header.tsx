@@ -21,6 +21,7 @@ import { isLoginAtom } from "../atoms";
     position: fixed;
     width: 100%;
     top: 0;
+
     height: 75px;
     font-size: 15px;
     padding: 20px 20px;
@@ -29,22 +30,26 @@ import { isLoginAtom } from "../atoms";
   }
   `;
   
-  const Col = styled(motion.div)`
+  const Col = styled(motion.div)` //스타일 layout 공부하기!!!!!!! >> 웹 사이즈별 반응
+    display:flex;
+    width:100%;
+    height: 100%;
+    margin: 0 auto;
+    align-items: center;
+    justify-content:space-between; 
+
+    /*
     display: flex;
     align-items: center;
+    */
   `;
   // 1) 로고 화면 
-const LogoItems = styled.ul`
-  display: flex;
-  align-items: center;
-  width: 630px;
-`;
-  const LogoItem = styled.li`
+  const Logo = styled.h1`
     display: flex;
     position: relative;
     justify-content: center;
     flex-direction: column;
-    margin-top:-10px;
+    top:-10px;
     height: 25px;
     font-size: 45px;
     font-family:'Just Me Again Down Here', cursive;
@@ -52,15 +57,12 @@ const LogoItems = styled.ul`
   `;
   //2) 메뉴바 화면 
   const Items = styled.ul`
-    margin-left: 700px;
     display: flex;
-    align-items: center;
-
     font-family: "Hanna";
     transition: color 0.3 ease-in-out;
   `;
   const LogItems = styled.ul` //로그인 후 나타내는 div자리
-    margin-left:450px;
+
     display: flex;
     align-items: center;
     font-family: "Hanna";
@@ -139,12 +141,9 @@ function Header(){
         initial={{ color:"#ffffff" }}
         animate={fontAnimation}
         >
-        <LogoItems>
-          <LogoItem onClick = {gohome}>
+          <Logo onClick = {gohome}>
             coffee capsook
-          </LogoItem>
-        </LogoItems>
-            
+          </Logo>
             {
               log?(
             <LogItems>
