@@ -136,6 +136,7 @@ function Login(){
     */
 
     //입력 값 초기화
+    alert('로그인이 완료되었습니다');
     setValue("email", "");
     setValue("pw","");
     setLog((log) => email); // recoil로 전역변수로써 한번 저장하면 계속 사용할 수 있음

@@ -128,6 +128,8 @@ function Enroll(){
           })
     */
         //입력 값 초기화
+        
+        alert('회원가입이 완료되었습니다');//윈도우 창 알림
         setValue("email", "");
         setValue("pw","");
         setValue("pwconfirm","");

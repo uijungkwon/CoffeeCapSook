@@ -53,7 +53,7 @@ const Button = styled.button`
     margin-left:50px;
 `;
 const ResultPage = () => {
-    const [index, setIndex]  = useState(1);
+    const [index, setIndex]  = useState(0);
     const onClick = ()=>{
         setIndex((prev) => prev+1);
 

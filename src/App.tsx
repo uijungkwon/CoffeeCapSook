@@ -9,6 +9,8 @@ import QuizPage from "./pages/QuizPage";
 import QuizCard from "./components/QuizCard";
 import ResultCard from "./components/ResultCard";
 import ResultPage from "./pages/ResultPage";
+import AllResults from "./Routes/AllResults";
+import { Detail } from "./Routes/Detail";
 
 function App(){
   return (
@@ -16,11 +18,14 @@ function App(){
       <Header/>
     <Switch>
     
-    <Route path ='/QuizPage/:id'><QuizCard/></Route>
-    <Route path ='/QuizPage'><QuizPage/></Route>
+       <Route path ='/QuizPage/:id'><QuizCard/></Route>
+       <Route path ='/QuizPage'><QuizPage/></Route>
 
-    <Route path ='/ResultPage/:tendency'><ResultCard/></Route>
-    <Route path ='/ResultPage'><ResultPage/></Route>
+       <Route path ='/ResultPage/:tendency'><ResultCard/></Route>
+       <Route path ='/ResultPage'><ResultPage/></Route>
+
+       <Route path="/AllResults/:num"><Detail/></Route>
+       <Route path="/AllResults"><AllResults/></Route>
 
        <Route path="/Login"><Login/></Route>
        <Route path="/Enroll"><Enroll/></Route>

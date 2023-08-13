@@ -5,6 +5,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from "react";
 import { useParams,RouteComponentProps,useLocation,useHistory,useRouteMatch ,withRouter } from "react-router-dom";
 import quiz from "../contents/questions";
+import { useSetRecoilState } from 'recoil';
+import { IData, dataState } from '../atoms';
+import { coffee } from '../data/coffee';
 
 const Wrapper = styled.div`
   overflow-x: hidden;
@@ -112,11 +115,11 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
         }, [match]);//페이지 넘길 때마다 다른 질문이 나오도록 생성
 
         //답안 버튼 클릭 했을 때 적용 시킬 수 있는 함수
-        const onclick = (item:IContent) =>{
+        /*const onclick = (item:IContent) =>{
             getScore(item.weight);
             console.log(item.answer);//답안 버튼 출력해보기!
 
-        }
+        }*/
     
         //버튼 클릭시 작동되는 함수
         //버튼 값을 저장하는 함수로 변경할지 고민
@@ -130,9 +133,12 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                 }
                 idx++;
             }));
+            console.log(score[1].maxIdx);
             
         };
-        
+        //////////////////////////////
+
+         
     return (
         <Wrapper>
           <AnimatePresence>  
@@ -157,7 +163,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                     {curQuiz?.content && curQuiz?.content.map((item, index) => (
                         <Link to={`/QuizPage/${id}`} key={index} >
                             <Button 
-                                onClick={ () => onclick(item)/*() => getScore(item.weight)*/}> {item.answer}
+                                onClick={ /*() => onclick(item)*/() => getScore(item.weight)}> {item.answer}
                             </Button>
                         </Link>
                     ))}
@@ -185,7 +191,10 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                         <Link to={`/ResultPage/${score[1].maxIdx}`} key={index}>
                             
                             <Button 
-                                onClick={() => onclick(item)}>{item.answer}
+                                onClick={() => {
+                                    getScore(item.weight);
+                                }
+                                }>{item.answer}
                             </Button>
                         </Link>
                     ))}
