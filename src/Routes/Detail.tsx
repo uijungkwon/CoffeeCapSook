@@ -1,12 +1,7 @@
-import React, {useEffect, useState, useRef} from "react";
-import { useQuery } from "react-query";
 import { styled } from "styled-components";
-//import { fetchCoins } from "../api";
-import { Link, useHistory, useParams, useRouteMatch } from "react-router-dom";
-import { AnimatePresence, motion, useScroll,useMotionValueEvent, } from "framer-motion";
+import {  useParams} from "react-router-dom";
+import {  motion} from "framer-motion";
 import results from "../contents/results";
-//import { coffee } from "../data/coffee";
-
 const Wrapper = styled.div`
   overflow-x: hidden;
   height:100vh;
@@ -16,36 +11,18 @@ const Wrapper = styled.div`
   padding: 60px;
   background-size: cover;
   position: relative;
-  background-color:whitesmoke;
+  background-color:white;
 `;
-const Header = styled.header`
-  //height: 10vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Img = styled.img`
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-`;
-const ImgBox = styled.div`
-  margin-top:-50px;
-  margin-bottom:20px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
-`;
-
-
 interface RouteParams {
     num: string;
   }
   const Title = styled.div`
-  background-color: pink;
-  //margin-top:-400px;
+  border-radius: 10px;
+  background-color: #de9b319c;
+  box-shadow: 0px 2px 4px black;
+  width:60%;
+
+  margin-top:-130px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,25 +34,23 @@ interface RouteParams {
   }
 `;
 const Content = styled.div`
-  width:620px;
-  height:200px;
-  background-color: #81eaff;
-  margin: 10px;
+  margin: 25px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
   h1{
       color:black;
-      font-size:37px;
-      font-weight: bold;
+      font-size:21px;
   }
-`;
-const Hr = styled.hr`
-  background-color:black;
-  width:90%;
-  height:2px;
+  h2 {
+    background-color: #de9b319c;
+    text-align: center;
+    width:45%;
+    font-size:23px;
+    border-radius: 10px;
+    box-shadow: 0px 2px 4px black;
+  }
 `;
 const Div = styled(motion.div)`//화면을 부드럽게 넘기는 모션 적용
   margin-top: 70px;
@@ -126,9 +101,11 @@ export function Detail(){
                     <Content>
                        <h1>{results[n].content}</h1>
                      </Content>
-                    <Hr></Hr>
+                    <br></br>
+                    
                     <Content>
-                     <h1>추천해주는 커피 특징 </h1>
+                    <h2 style = {{color:"black", fontSize:"30px", fontWeight:"bold", marginBottom:"25px"}}>이런 커피가 잘맞아요</h2>
+                     <h1>{results[n].feature}</h1>
                     </Content>
             </Div>
      </Wrapper>

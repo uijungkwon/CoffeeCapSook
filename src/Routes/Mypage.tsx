@@ -159,6 +159,8 @@ const BigBox = styled(motion.div)<{ ypoint: number }>`
 const ImgBox = styled.div`
   margin-top:-50px;
   margin-bottom:20px;
+  width:30%;
+  height:30%;
   align-items: center;
   justify-content: center;
   flex-direction: column;

@@ -1,9 +1,7 @@
 import { styled } from "styled-components";
+import {useState,useEffect,useRef } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Login from "./Login";
-import {atom, useRecoilState, useRecoilValue} from "recoil";
-import QuizPage from "../pages/QuizPage";
-import { useState } from "react";
+import { useRecoilValue} from "recoil";
 import { isLoginAtom } from "../atoms";
 const homeBg = require("../images/homeBg.png");
 
@@ -17,8 +15,10 @@ const Wrapper = styled.div`
   padding: 60px;
   background-size: cover;
   position: relative;
+  background-color: black;
+  // 첫번째 프레임 배경사진 삽입
   background-image:linear-gradient(rgba(0, 0, 0, 0.195), #000000ca),
-  url(${homeBg});// 첫번째 프레임 배경사진 삽입
+  url(${homeBg});
   background-repeat: no-repeat;
 `;
 
@@ -61,24 +61,27 @@ const Button = styled.button`
         margin-top:200px;
         margin-left:50px;
 `;
+interface IUseInterval {
+    (callback: () => void, interval: number): void;
+  }
 function Home(){
     //1) 로그인 여부 확인
     const log = useRecoilValue(isLoginAtom);//아이디를 입력했는지 알려주는 boolean 값
     console.log(`값 : ${log}`);
-    
+
     return (
         <>
         <Wrapper >
-            <FontBox>
-                <h1>coffee capsook</h1>
-                <h2>당신의 커피 취향은 무엇인가요?</h2>
-                {log ?(<h3>시작 버튼을 눌러 커피 캡슐 취향 테스트를 시작해보세요.</h3>):(<h3>로그인 후 테스트를 시작하면 당신만의 커피 캡슐을 추천해드립니다. </h3>)}
-                
-            </FontBox>
-            {log ?  (<Button><Link to = "/QuizPage/1">시작 하기</Link></Button>) :(<Button><Link to = "/Login">로그인</Link></Button>)}
-        </Wrapper>  
-           
+          <FontBox>
+            <h1>coffee capsook</h1>
+            <h2>당신의 커피 취향은 무엇인가요?</h2>
+            {log ?(<h3>시작 버튼을 눌러 커피 캡슐 취향 테스트를 시작해보세요.</h3>):(<h3>로그인 후 테스트를 시작하면 당신만의 커피 캡슐을 추천해드립니다. </h3>)}
+            
+          </FontBox>
+        {log ?  (<Button><Link to = "/QuizPage/1">시작 하기</Link></Button>) :(<Button><Link to = "/Login">로그인</Link></Button>)}
+    </Wrapper> 
         </>
+
     );
 }
 export default Home;

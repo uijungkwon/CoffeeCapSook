@@ -1,10 +1,7 @@
-import React, {useEffect, useState, useRef} from "react";
-import { useQuery } from "react-query";
 import { styled } from "styled-components";
-//import { fetchCoins } from "../api";
-import { Link, useHistory, useParams, useRouteMatch } from "react-router-dom";
-import { AnimatePresence, motion, useScroll,useMotionValueEvent, } from "framer-motion";
-//import { coffee } from "../data/coffee";
+import { Link} from "react-router-dom";
+import {  motion } from "framer-motion";
+
 
 const Wrapper = styled.div`
   overflow-x: hidden;
@@ -30,40 +27,12 @@ const Title = styled.div`
     font-weight:bold;
     color:black;
 `;
-
-const Ul = styled.ul`
- 
- `;
+const Ul = styled.ul` `;
 const Li  = styled.li`
   color:black;
   strong{
       font-weight:bold;
     }
-`;
-const Img = styled.img`
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-`;
-const Button = styled.button`
-  background-color: rgba(211, 211, 211, 0.798);
-  font-size:20px;
-  font-weight:bold;
-  width:70px;
-
-  border-radius: 30px;
-  &:hover {//바로 위 태그를 가리킴
-      color: #0059ff;
-      cursor: pointer;
-    }
-`;
-const ImgBox = styled.div`
-  margin-top:-50px;
-  margin-bottom:20px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-
 `;
 const Box = styled(motion.div)`
   background: #dfdfdf;
@@ -100,7 +69,7 @@ function AllResults(){
                    pathname: `/AllResults/0`,
                     }}
                 >
-                  <Box>1번 결과 유형</Box>
+                  <Box>암 슈퍼 sour 슈퍼 sour 형</Box>
                 </Link>
               </li>
               <li>
@@ -109,7 +78,7 @@ function AllResults(){
                    pathname: `/AllResults/1`,
                     }}
                 >
-                  <Box>2번 결과 유형</Box>
+                  <Box>나 가을 타나봐 형</Box>
                 </Link>
               </li>
               <li>
@@ -118,7 +87,7 @@ function AllResults(){
                    pathname: `/AllResults/2`,
                     }}
                 >
-                  <Box>3번 결과 유형</Box>
+                  <Box>자유로운 예술가 형</Box>
                 </Link>
               </li>
               <li>
@@ -127,7 +96,7 @@ function AllResults(){
                    pathname: `/AllResults/3`,
                     }}
                 >
-                  <Box>4번 결과 유형</Box>
+                  <Box>건물 사이에 피어난 장미 형</Box>
                 </Link>
               </li>
               <li>
@@ -136,7 +105,7 @@ function AllResults(){
                    pathname: `/AllResults/4`,
                     }}
                 >
-                  <Box>5번 결과 유형</Box>
+                  <Box>무엇이든 다좋다 형</Box>
                 </Link>
               </li>
               

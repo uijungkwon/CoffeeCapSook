@@ -3,15 +3,12 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from "react";
-import { useParams,RouteComponentProps,useLocation,useHistory,useRouteMatch ,withRouter } from "react-router-dom";
+import { RouteComponentProps,withRouter } from "react-router-dom";
 import quiz from "../contents/questions";
-import { useSetRecoilState } from 'recoil';
-import { IData, dataState } from '../atoms';
-import { coffee } from '../data/coffee';
 
 const Wrapper = styled.div`
   overflow-x: hidden;
-  height:110vh;
+  height:100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,11 +21,11 @@ const Wrapper = styled.div`
 
 const Div = styled(motion.div)`//화면을 부드럽게 넘기는 모션 적용
   background-color:whitesmoke;
-  width: 700px; 
-  height: 700px;
+  width: 600px; 
+  height: 600px;
   border-radius: 30px;
-  box-shadow: 0px 2px 4px black;
-
+  box-shadow: 0px 2px 4px black; 
+  margin-top: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -37,6 +34,7 @@ const Div = styled(motion.div)`//화면을 부드럽게 넘기는 모션 적용
     cursor: pointer;
   }
 `;
+//화면 넘길 때 나타나는 애니메이션 효과
 const divVariants = {
     initial: {
       opacity: 0
@@ -52,13 +50,12 @@ const Title = styled.div`
     margin-bottom:30px;
 `;
 const ImgBox = styled.div`
-    //background-color: pink;
-    width:640px;
-    height:350px;
+    width:540px;
+    height:300px;
 `;
 const Button = styled.button`
 	width:300px;
-    height:60px;
+    height:40px;
     font-family:"Hanna" ;
     font-weight:bold;
 	background-color: rgba(211, 211, 211, 0.798);
@@ -67,6 +64,10 @@ const Button = styled.button`
 	font-size: 23px;
 	color: ${(props) => props.theme.accentColor};
     margin-top:21px;
+    &:hover {//바로 위 태그를 가리킴
+      color: #213fff;
+      cursor: pointer;
+    }
 `;
 
 interface MatchParams {
@@ -76,6 +77,7 @@ interface MatchParams {
 interface IContent{//질문에 대한 대답, 대답에 대한 점수
     answer:string;
     weight:number[];
+    value:number;
 }
 interface IQuiz {//질문 제목, 질문 내용
     title:string;
@@ -90,8 +92,7 @@ const QuizWrapper = styled.div`
   margin : 0;
   padding : 0;
 `;
-
-//배열에 타입 지정 - 점수 배정정
+//배열에 타입 지정 - 점수 배정
 const score:[number[], IScore] = [
     [0, 0, 0, 0, 0, 0, 0, 0],  //score[0]
     {
@@ -99,30 +100,40 @@ const score:[number[], IScore] = [
         'maxIdx':0, 
     }
 ];
+//사용자가 누른 버튼 값 저장
+const buttonValue:number[] = [0,0,0,0,0,0,0,0];
 
-// 이 페이지에서 item의 answer 값 가져와서 전체 객체로 저장해서 백으로 넘기는 방법 구현
+//버튼을 배열 형태로 보내보기로 결정!
 const QuizCard: React.FC<RouteComponentProps<MatchParams>>
       = ({match}) => {//match는 질문 번호 ex) 1,2,3 ...
+
+        //1) 페이지 넘길 때마다 퀴즈 번호 나타나게함
         const [curQuiz, setQuiz] = useState<IQuiz>();
         const [id, setId] = useState<number>(0);
-    
+        //2) 페이지 변경 되었을 때, state 변경
         useEffect(() => {
             const num = parseInt(match.params.id);
             if (quiz) {
-                setQuiz(quiz[num - 1]);//렌더링 시 질문 설정 (현재 주소 파라미터에서 질문 번호 가져온다.
+                setQuiz(quiz[num - 1]);//렌더링 시 질문 설정 (현재 주소 파라미터에서 질문 번호 가져옴)
                 setId(num + 1);
             }
         }, [match]);//페이지 넘길 때마다 다른 질문이 나오도록 생성
 
-        //답안 버튼 클릭 했을 때 적용 시킬 수 있는 함수
-        /*const onclick = (item:IContent) =>{
+        //3) 버튼 클릭시, 결과를 나타내기 위한 점수 누적
+        const [num,setNum] = useState(0);
+        const onclick =(item:IContent)=> {
+            
+            buttonValue[num] = item.value;
+            setNum((num)=> num+1);
+            
+            if(num === 7){
+                console.log(buttonValue); //해당 배열을 서버에 전송할 수 있음
+                /*서버 전송 코드 */
+                setNum((num)=> 0);
+                
+            }
             getScore(item.weight);
-            console.log(item.answer);//답안 버튼 출력해보기!
-
-        }*/
-    
-        //버튼 클릭시 작동되는 함수
-        //버튼 값을 저장하는 함수로 변경할지 고민
+        }
         const getScore = (arr:number[]) => {
             let idx = 0;
             arr.map((item => {
@@ -133,12 +144,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                 }
                 idx++;
             }));
-            console.log(score[1].maxIdx);
-            
         };
-        //////////////////////////////
-
-         
     return (
         <Wrapper>
           <AnimatePresence>  
@@ -163,7 +169,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                     {curQuiz?.content && curQuiz?.content.map((item, index) => (
                         <Link to={`/QuizPage/${id}`} key={index} >
                             <Button 
-                                onClick={ /*() => onclick(item)*/() => getScore(item.weight)}> {item.answer}
+                                onClick={ () => onclick(item)/*() => getScore(item.weight)*/}> {item.answer}
                             </Button>
                         </Link>
                     ))}
@@ -185,15 +191,13 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                     <h1 style = {{color:"black", fontSize:"30px",}}>{curQuiz?.title}</h1>
                 </Title>
                 <ImgBox>
-                      <img src={require(`../images/${match.params.id}.png`)}/>
+                      <img  src={require(`../images/${match.params.id}.png`)}/>
                 </ImgBox>
                     {curQuiz?.content && curQuiz?.content.map((item:any, index:number) => (
                         <Link to={`/ResultPage/${score[1].maxIdx}`} key={index}>
                             
                             <Button 
-                                onClick={() => {
-                                    getScore(item.weight);
-                                }
+                                onClick={() => onclick(item)
                                 }>{item.answer}
                             </Button>
                         </Link>

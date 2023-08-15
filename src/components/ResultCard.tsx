@@ -3,19 +3,16 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from "react";
-import { useParams,RouteComponentProps,useLocation,useHistory,useRouteMatch ,withRouter } from "react-router-dom";
-import quiz from "../contents/questions";
+import {RouteComponentProps,useHistory,withRouter } from "react-router-dom";
 import results from '../contents/results';
 import { coffee } from '../data/coffee';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 import { dataState } from '../atoms';
 import { IData } from '../atoms';
 const loading = require("../images/spinner.gif");
-
-
 const Wrapper = styled.div`
   overflow-x: hidden;
-  height:130vh;
+  height:155vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -23,13 +20,12 @@ const Wrapper = styled.div`
   padding: 60px;
   background-size: cover;
   position: relative;
-  background-color:#e7e7e7;
+  background-color:whitesmoke;
 `;
 const Div = styled(motion.div)`//화면을 부드럽게 넘기는 모션 적용
   margin-top: 70px;
-  background-color:whitesmoke;
   width: 700px; 
-  //height: 900px;
+
   border-radius: 30px;
   box-shadow: 0px 2px 4px black;
   padding: 22px 22px 22px 22px;
@@ -54,8 +50,6 @@ const divVariants = {
     }
   };
 const Title = styled.div`
-    //background-color: #e7e7e7;
-    //margin-top:-400px;
     border-radius: 20px;
     display: flex;
     align-items: center;
@@ -69,8 +63,6 @@ const Title = styled.div`
 `;
 const Content = styled.div`
     width:620px;
-    //height:200px;
-    //background-color: #81eaff;
     margin: 10px;
     display: flex;
     align-items: center;
@@ -81,12 +73,23 @@ const Content = styled.div`
     h1{
         color:black;
         font-size:23px;
+        
+    }
+    h2{
     }
 `;
 const Hr = styled.hr`
     background-color:black;
     width:90%;
     height:0.5px;
+`;
+const ClickButton = styled.button`
+border-radius: 30px;
+background-color: lightgray;
+&:hover {//바로 위 태그를 가리킴
+      color: #0059ff;
+      cursor: pointer;
+    }
 `;
 const Button = styled.button`
   margin-top:20px;
@@ -99,62 +102,41 @@ const Button = styled.button`
 	border-radius: 10px;
 	font-size: 25px;
 	color: ${(props) => props.theme.accentColor};
-    //margin-top:50px;
-    //margin-left:50px;
+  &:hover {//바로 위 태그를 가리킴
+      color: #213fff;
+      cursor: pointer;
+    }
 `;
-
 interface MatchParams {
     tendency:string;
 };
-interface IResult {
-    title:string;
-    content: string;
-};
-const Img = styled.img`
-    width:200px;
-    height: 800px;
-`;
+
 const ResultCard: React.FunctionComponent<RouteComponentProps<MatchParams>> 
       = ({match}) => {
+    //1) 결과가 로딩중인지 확인해주는 state
     const [showResult, setShowResult] = useState(false);
-     console.log(match.params.tendency);
-     ////////////////////////////
-     //const setData = useSetRecoilState(dataState);// key = "data"
-     const [data,setData] = useRecoilState(dataState);
-     var num =0;
-     const getRandom = (min:number, max:number) =>Math.floor(Math.random() * (max - min) + min);
-     
-     useEffect(()=> {
-      num = getRandom(2, 143);
+    var url;
+    //2) 캡슐 데이터를 업데이트 해주는 state
+    const [data,setData] = useRecoilState(dataState);
+    var num =0;
+    const getRandom = (min:number, max:number) =>Math.floor(Math.random() * (max - min) + min);//일단 랜덤 추천으로 구현
+    //3) 결과 페이지 나타날 때, 렌더링
+    useEffect(()=> {
+      num = getRandom(2, 143);//난수 생성
         const tick = setTimeout(() => {
-            setShowResult(true);
+            setShowResult(true); //3초 후 결과를 보여줌
         }, 3000);
+        //추천된 캡슐 데이터를 리스트 형태로 저장
         setData(oldData =>{
           const locStorageResult :IData[]= [ {id:coffee.find(item =>item.id === num)?.id || 5 , name:coffee.find(item =>item.id === num)?.name || " ",성분:coffee.find(item =>item.id === num)?.성분 || " ", 강도:coffee.find(item =>item.id === num)?.강도 || " ", 맛:coffee.find(item =>item.id === num)?.맛 || " ", 커피머신:coffee.find(item =>item.id === num)?.커피머신 || " ", 구매링크:coffee.find(item =>item.id === num)?.구매링크 || " ",  },...oldData];
           localStorage.setItem('alldata', JSON.stringify(locStorageResult));
          
-          console.log(locStorageResult);
+          //console.log(locStorageResult);
           return locStorageResult;
               } 
             );
-        
-        
         return () => clearTimeout(tick);
-        
     }, []);
-    
-
-
-
-
-const history = useHistory();
-const onclick = () =>{
-    //추천된 캡슐 정보 저장 하는 코드 작성 
-    
-}
-var url;
-//로컬 스토리지!!
-
 return (
         <>
             <Wrapper>
@@ -201,7 +183,7 @@ return (
                          <h1 >커피 머신: {data[0].커피머신}</h1>
                         </li>
                         <li>
-                         <h1>구매링크 :<button style = {{borderRadius:"30px ", backgroundColor:"lightgray"}} onClick = {()=>{url = data[0].구매링크;window.open(url)}}>click</button></h1>
+                         <h1>구매링크 :<ClickButton style = {{borderRadius:"30px ", backgroundColor:"lightgray"}} onClick = {()=>{url = data[0].구매링크;window.open(url)}}>click</ClickButton></h1>
                         </li>
                        </ul>
                      </Content>
@@ -215,7 +197,7 @@ return (
             
                 {!showResult &&
                 <>
-                    <div>
+                    <div >
                      <img src = {loading}></img>
                     </div>
                     <div style = {{color:"black", fontSize:"35px"}}>Loading...</div>
@@ -228,7 +210,3 @@ return (
 };
 
 export default withRouter(ResultCard);
-/*
-<Button onClick = {onClick}>저장하기</Button>
-//저장하기 버튼 보류(자동 저장 되도록 생성)
-*/

@@ -11,7 +11,7 @@ import {
 import { useRecoilValue } from "recoil";
 import { isLoginAtom } from "../atoms";
   const homeBg = require("../images/homeBg.png");
-
+  //스타일 컴포넌트
   const Nav = styled(motion.nav)`
     z-index: 99;
     display: flex;
@@ -22,7 +22,7 @@ import { isLoginAtom } from "../atoms";
     width: 100%;
     top: 0;
 
-    height: 75px;
+    height: 68px;
     font-size: 15px;
     padding: 20px 20px;
     :hover {
@@ -30,18 +30,14 @@ import { isLoginAtom } from "../atoms";
   }
   `;
   
-  const Col = styled(motion.div)` //스타일 layout 공부하기!!!!!!! >> 웹 사이즈별 반응
+  const Col = styled(motion.div)`
     display:flex;
-    width:100%;
+    width:100%;//웹 페이지 모양에 맞게 자유롭게 변형 
     height: 100%;
-    margin: 0 auto;
+    margin: 0 auto;//가운데 정렬
     align-items: center;
     justify-content:space-between; 
 
-    /*
-    display: flex;
-    align-items: center;
-    */
   `;
   // 1) 로고 화면 
   const Logo = styled.h1`
@@ -51,9 +47,8 @@ import { isLoginAtom } from "../atoms";
     flex-direction: column;
     top:-10px;
     height: 25px;
-    font-size: 45px;
+    font-size: 42px;
     font-family:'Just Me Again Down Here', cursive;
-    //color:white;
   `;
   //2) 메뉴바 화면 
   const Items = styled.ul`
@@ -61,7 +56,8 @@ import { isLoginAtom } from "../atoms";
     font-family: "Hanna";
     transition: color 0.3 ease-in-out;
   `;
-  const LogItems = styled.ul` //로그인 후 나타내는 div자리
+  //로그인 후 나타내는 div자리
+  const LogItems = styled.ul`
 
     display: flex;
     align-items: center;
@@ -72,12 +68,11 @@ import { isLoginAtom } from "../atoms";
     margin-right: 40px;
     display: flex;
     position: relative;
-    font-size:18px;
+    font-size:15px;
     justify-content: center;
     flex-direction: column;
      //color:white;
   `;
-
   //4) 페이지 이동 동그라미
   const Circle = styled(motion.span)`
     position: absolute;
@@ -90,13 +85,13 @@ import { isLoginAtom } from "../atoms";
     margin: 0 auto;
     background-color: white;
   `;
-const H1 = styled.h1`
+  const H1 = styled.h1`
   font-size:15px;
   margin-left:60px;
-`;
+  `;
 function Header(){
+    //1) 로그인 완료 => recoil로 로그인 한 메일 log 저장
     const log = useRecoilValue(isLoginAtom);
-
     //2) 현재 어느 페이지에 있는지 확인
     const myMatch = useRouteMatch("/Mypage");
     const allCapMatch = useRouteMatch("/AllCap");
@@ -107,39 +102,38 @@ function Header(){
     const gohome = () => {
         history.push(`/`);
   };
-//4) 스크롤 내릴때 Nav바 색깔 변환
+    //4) 스크롤 내릴때 Nav바 색깔 변환
     const { scrollY } = useScroll();
     const navAnimation = useAnimation();//애니메이션을 변수로 작성 
     const fontAnimation = useAnimation();
-    useMotionValueEvent(scrollY, "change", () => {
-      if (scrollY.get() > 40) {
-        navAnimation.start({
+      useMotionValueEvent(scrollY, "change", () => {
+        if (scrollY.get() > 40) {
+          navAnimation.start({
           backgroundColor: "#0000000",
         });
-        fontAnimation.start({
+          fontAnimation.start({
           color:"rgba(0,0,0,1)",
         })
 
       } else {
-        navAnimation.start({
+          navAnimation.start({
           backgroundColor: "rgba(0,0,0,1)",
         });
-        fontAnimation.start({
+          fontAnimation.start({
           color:"#ffffff",
         })
       }
     });
 
-
     return (
         <>
       <Nav
-      initial={{ backgroundColor: "rgba(0,0,0,1)" }}
-      animate={navAnimation}
+        initial={{ backgroundColor: "rgba(0,0,0,1)" }}
+        animate={navAnimation}
       >
         <Col
-        initial={{ color:"#ffffff" }}
-        animate={fontAnimation}
+          initial={{ color:"#ffffff" }}
+          animate={fontAnimation}
         >
           <Logo onClick = {gohome}>
             coffee capsook
@@ -159,7 +153,6 @@ function Header(){
                 </Item>
                 <H1 >{log} 님 </H1>
               </LogItems>
-              
               ):
               (
             <Items>
@@ -182,6 +175,3 @@ function Header(){
     );
 }
 export default Header;
-/*
-
-*/

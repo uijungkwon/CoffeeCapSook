@@ -66,15 +66,15 @@ const Input = styled.input`
 `;
 const Button = styled.button`
 	width:200px;
-    height:50px;
-    font-family:"Hanna" ;
+  height:50px;
+  font-family:"Hanna" ;
 	background-color: rgba(211, 211, 211, 0.798);
 	border: none;
 	border-radius: 10px;
 	font-size: 25px;
 	color: ${(props) => props.theme.accentColor};
-    margin-top:50px;
-    margin-left:50px;
+  margin-top:50px;
+  margin-left:50px;
 `;
 const Label = styled.label`
   font-size:20px;
@@ -90,22 +90,19 @@ interface IForm { //start 값의 타입
     pw: string;
     pwconfirm:string;
   }
-
-
-
 function Enroll(){
     const { register, handleSubmit, setValue , formState: { errors },getValues} = useForm<IForm>({
         mode: "onSubmit",
         defaultValues: {
-          email: "",
-          pw:"",
-          pwconfirm:"",
+        email: "",
+        pw:"",
+        pwconfirm:"",
         },
       });
-      
       const history = useHistory();
+      //회원 가입 폼 제출 시 서버 연결
       const onSubmit = ({email,pw,pwconfirm}:IForm) =>{
-        /* 서버 연결 코드 
+        /* 
         axios.post('https://port-0-baco-server-eg4e2alkhufq9d.sel4.cloudtype.app/join',
           { //왼쪽 값: 서버 데이터 변수 이름
             email: email ,
@@ -116,10 +113,10 @@ function Enroll(){
             headers: {
               //'Content-Type': 'application/json',
               "Access-Control-Allow-Origin" : "*",
-
             }
           })
           .then((response) => {
+            console.log(response?.data);//제대로 반환되었는지 데이터 확인
             window.alert('회원가입 되었습니다. 로그인해주세요.')
             history.push('/Login')
           }).catch((error) => {
@@ -128,7 +125,6 @@ function Enroll(){
           })
     */
         //입력 값 초기화
-        
         alert('회원가입이 완료되었습니다');//윈도우 창 알림
         setValue("email", "");
         setValue("pw","");
@@ -193,7 +189,7 @@ function Enroll(){
                     {errors?.pwconfirm && (
                         <Span>{errors.pwconfirm.message}</Span>
                         )}
-                        <Button /*onClick={signUp}*/>회원 가입</Button>
+                        <Button >회원 가입</Button>
                  </CreateForm>
                 
             </Box>

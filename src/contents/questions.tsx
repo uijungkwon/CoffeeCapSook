@@ -6,11 +6,13 @@ const questions = [
         content:[
             {
                 answer:"귀여운 미니백",
-                weight:[4,3,0,0,0]
+                weight:[4,3,0,0,0],
+                value:1 //버튼 값을 숫자로 변경 
             },
             {
                 answer:"물건 가득  보부상백",
-                weight: [0,4,1,2,2]
+                weight: [0,4,1,2,2],
+                value:2
             }
         ]
     },
@@ -19,11 +21,13 @@ const questions = [
         content:[
             {
                 answer:"자연 풍경",
-                weight: [4, 4, 0, 0, 0]
+                weight: [4, 4, 0, 0, 0],
+                value:1
             },
             {
                 answer:"도시 풍경",
-                weight: [0, 0, 4, 5, 5]
+                weight: [0, 0, 4, 5, 5],
+                value:2
             }
         ]
     },
@@ -32,11 +36,13 @@ const questions = [
         content:[
             {
                 answer:"한다",
-                weight: [5, 5, 0, 0, 0]
+                weight: [5, 5, 0, 0, 0],
+                value:1
             },
             {
                 answer:"안한다",
-                weight: [0, 0, 5, 5, 5]
+                weight: [0, 0, 5, 5, 5],
+                value:2
             }
         ]
     },
@@ -45,11 +51,13 @@ const questions = [
         content:[
             {
                 answer:"점심에 밥먹고 먹는 커피",
-                weight: [5, 4, 4, 0, 0]
+                weight: [5, 4, 4, 0, 0],
+                value:1
             },
             {
                 answer:"밤샐 때 먹는 커피",
-                weight: [0, 0, 0, 4, 4]
+                weight: [0, 0, 0, 4, 4],
+                value:2
             }
         ]
     },
@@ -58,11 +66,13 @@ const questions = [
         content:[
             {
                 answer:"칸쵸",
-                weight: [3, 5, 0, 0, 3]
+                weight: [3, 5, 0, 0, 3],
+                value:1
             },
             {
                 answer:"포테이토칩",
-                weight: [0, 5, 2,4, 4]
+                weight: [0, 5, 2,4, 4],
+                value:2
             }
         ]
     },
@@ -71,11 +81,13 @@ const questions = [
         content:[
             {
                 answer:"프렌치 토스트",
-                weight: [4, 3, 0, 4, 0]
+                weight: [4, 3, 0, 4, 0],
+                value:1
             },
             {
                 answer:"뜨끈한 국밥",
-                weight: [0, 3, 4, 4, 5]
+                weight: [0, 3, 4, 4, 5],
+                value:2
             }
         ]
     },
@@ -84,11 +96,13 @@ const questions = [
         content:[
             {
                 answer:"빵빠레",
-                weight: [5, 0, 4, 3, 3]
+                weight: [5, 0, 4, 3, 3],
+                value:1
             },
             {
                 answer:"폴라포",
-                weight: [4, 4, 3, 5, 5]
+                weight: [4, 4, 3, 5, 5],
+                value:2
             }
         ]
     },
@@ -97,11 +111,13 @@ const questions = [
         content:[
             {
                 answer:"사리곰탕",
-                weight: [5, 0, 5, 0, 0]
+                weight: [5, 0, 5, 0, 0],
+                value:1
             },
             {
                 answer:"열라면",
-                weight: [0, 3, 0, 5, 5]
+                weight: [0, 3, 0, 5, 5],
+                value:2
             }
         ]
     },
