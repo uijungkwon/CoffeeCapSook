@@ -12,7 +12,7 @@ import { IData } from '../atoms';
 const loading = require("../images/spinner.gif");
 const Wrapper = styled.div`
   overflow-x: hidden;
-  height:155vh;
+  height:100%vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -197,10 +197,12 @@ return (
             
                 {!showResult &&
                 <>
-                    <div >
+                    <div style = {{height:"100vh", alignItems:"center",justifyContent:"center", flexDirection:"column"}}>
                      <img src = {loading}></img>
+                     <h1 style = {{color:"black", fontSize:"35px"}}>Loading...</h1>
                     </div>
-                    <div style = {{color:"black", fontSize:"35px"}}>Loading...</div>
+                    
+                    
                 </>
                 }
               </AnimatePresence>

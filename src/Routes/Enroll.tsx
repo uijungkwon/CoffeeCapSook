@@ -102,12 +102,12 @@ function Enroll(){
       const history = useHistory();
       //회원 가입 폼 제출 시 서버 연결
       const onSubmit = ({email,pw,pwconfirm}:IForm) =>{
-        /* 
-        axios.post('https://port-0-baco-server-eg4e2alkhufq9d.sel4.cloudtype.app/join',
+        
+        axios.post('https://port-0-coffeecapsook-3prof2llleypwbv.sel3.cloudtype.app/join',
           { //왼쪽 값: 서버 데이터 변수 이름
             email: email ,
             password :pw ,
-            password2 :pwconfirm,
+            // password2 :pwconfirm,
           },
           {
             headers: {
@@ -120,16 +120,16 @@ function Enroll(){
             window.alert('회원가입 되었습니다. 로그인해주세요.')
             history.push('/Login')
           }).catch((error) => {
-            console.log("서버와 연결되지 않습니다");
+            console.log(error);
             window.alert(error);
           })
-    */
+    
         //입력 값 초기화
-        alert('회원가입이 완료되었습니다');//윈도우 창 알림
+        //alert('회원가입이 완료되었습니다');//윈도우 창 알림
         setValue("email", "");
         setValue("pw","");
         setValue("pwconfirm","");
-        history.push('/Login');
+        
       }
 
     return (
