@@ -107,7 +107,7 @@ function Enroll(){
           { //왼쪽 값: 서버 데이터 변수 이름
             email: email ,
             password :pw ,
-            // password2 :pwconfirm,
+            password2 :pwconfirm,
           },
           {
             headers: {

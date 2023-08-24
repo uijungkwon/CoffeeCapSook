@@ -108,7 +108,7 @@ function Login(){
   
   //서버에 로그인 폼 제출
   const onSubmit = ({email,pw}:IForm) =>{
-    /*
+    
     axios.post('https://port-0-coffeecapsook-3prof2llleypwbv.sel3.cloudtype.app/login',
     {
       email: email ,
@@ -124,20 +124,15 @@ function Login(){
     .then((response) => {
       window.alert('로그인 완료되었습니다.')
       setLog((log) => response?.data?.email);//로그인 완료되면, log값을 반환받은 이메일 값으로 변경
-      console.log(log);//"email" 이름으로 반환받는 다고 가정
       history.push('/') //로그인 후 홈화면으로 돌아가기
     })
     .catch((error) => {
       console.log(error?.response?.data);
       window.alert(error);
     })
-  */
-
-    //폼 입력 값 초기화
-    //alert('로그인이 완료되었습니다');
+  
     setValue("email", "");
     setValue("pw","");
-    setLog((log) => email); 
   }
 
 
