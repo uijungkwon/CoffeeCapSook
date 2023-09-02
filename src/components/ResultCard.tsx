@@ -197,7 +197,7 @@ return (
             
                 {!showResult &&
                 <>
-                    <div style = {{height:"100vh", alignItems:"center",justifyContent:"center", flexDirection:"column"}}>
+                    <div style = {{marginTop:"200px", height:"100vh", alignItems:"center",justifyContent:"center", flexDirection:"column"}}>
                      <img src = {loading}></img>
                      <h1 style = {{color:"black", fontSize:"35px"}}>Loading...</h1>
                     </div>

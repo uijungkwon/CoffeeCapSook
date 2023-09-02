@@ -6,7 +6,7 @@ import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { AnimatePresence, motion, useScroll,useMotionValueEvent, } from "framer-motion";
 import { coffee } from "../data/coffee";
 import { useRecoilValue } from "recoil";
-import { dataState } from "../atoms";
+import { dataState,fetchcapsule } from "../atoms";
 const Wrapper = styled.div`
   overflow-x: hidden;
   height:1200vh;
@@ -78,7 +78,6 @@ const Ul = styled.ul`
  
  `;
  const BigBoxUl = styled.ul`
-
  color:black;
  font-size:20px;
  list-style-type: square;
@@ -209,21 +208,26 @@ const Info = styled.div`
         text-align: left;
     }
 `;
+
+interface ICapsuleType{
+  /*서버에서 받는 데이터 타입 및 이름 정의 - 전체 속성 적기*/
+  coffee_id:string;
+  coffee_name:string;
+  origin:string;
+  ingredient:string;
+  taste_and_aroma:string;
+  compatible:string;
+  purchase:string;
+};
+
 function Mypage(){
 
+  /*sample - 로컬에 저장한 랜덤으로 추천 받은 캡슐 데이터*/
   const data = useRecoilValue(dataState);
-  var num = 1;
-  //서버와 반환 타입 의논 - id외에도 다른 캡슐 정보도 함께 반환받아야함.
-  //서버에도 전체 캡슐 데이터 정보가 있어야함 - 데이터 타입 의논
-  //"네스프레소" - 저장된 캡슐이라고 생각
 
-  const MyData = [
-    {"id":43,"name":"오라피오","성분":"브라질,코스타리카,우간다", "강도":"6","맛":"부드러운 풍미, 은은한 산미, 캐러멜 향","커피머신":"네스프레소 버츄오 머신 ","구매링크":"https://www.nespresso.com/kr/ko/order/capsules/vertuo"},
-    {"id":44,"name":"볼테소","성분":"브라질, 콜롬비아", "강도":"4","맛":"비스킷향, 와인향,마일드","커피머신":"네스프레소 버츄오 머신 ","구매링크":"https://www.nespresso.com/kr/ko/order/capsules/vertuo"},
-    {"id":58,"name":"아이스 포르테","성분":"콜롬비아,인도네시아,에티오피아", "강도":"6","맛":"곡물향, 우디향, 로스팅향","커피머신":"네스프레소 버츄오 머신 ","구매링크":"https://www.nespresso.com/kr/ko/order/capsules/vertuo"},
-    {"id":86,"name":"리스트레토-디카페나토(디카페인)","성분":"브라질,콜롬비아", "강도":"10","맛":"미디엄 다크로스팅, 산미, 쓴맛","커피머신":"네스프레소 오리지널 머신 ","구매링크":"https://www.nespresso.com/kr/ko/order/capsules/original"},
-  ];//서버에서 반환받은 "마이페이지" id 목록이라고 생각
-  
+  /*서버에 저장된 캡슐 데이터들 모두 가져오기 */
+  const { data:capsule, isLoading } = useQuery<ICapsuleType>(["Coffe","capsule"], fetchcapsule);
+
   var url = "sample";
   const rarr = "-->";
   const history =useHistory();
@@ -239,75 +243,40 @@ function Mypage(){
 
   const [position, setPosition] = useState(0);
   const getRandom = (min:number, max:number) =>Math.floor(Math.random() * (max - min) + min);
-  
-  //연습
-  /*useEffect(() => {
-    /*
-    num = getRandom(2, 143);
-    //다른 recoil만들어서 데이터 셋 만들기!!
-    console.log(coffee.find(item =>item.id == num)); //맞는 배열 찾을 수 있음
-    
-  const sample =50;
-  if(sample > 49 && sample < 70)
-      console.log(`속해 있습니다!`);
-  else
-      console.log("노 속");
-  }, []);
-  */
+ 
 
-//coffee.find(item => item.id == num)?.id || 5 , name:coffee.find(item =>item.id == num)?.name || " ",성분:coffee.find(item =>item.id == num)?.성분 || " ", 강도:coffee.find(item =>item.id == num)?.강도 || " ", 맛:coffee.find(item =>item.id == num)?.맛 || " ", 커피머신:coffee.find(item =>item.id == num)?.커피머신 || " ", 구매링크:coffee.find(item =>item.id == num)?.구매링크 || " ",
-//coffee.find(item => (item.id > 50  && item.id < 80 ))?.name || " "
-
-
+  //카테고리
   const [index,setIndex] = useState("1");//Select 캡슐 종류 선택 -> index 지정
   const [visible,setVisible] =useState(false);
   const onClick = ()=>{
       setVisible((prev) => !prev);
     }
-    //////////추려낸 데이터
-  const select_1 = data.filter(item => (item.id > 39  && item.id <114 ));
-  const select_2 = data.filter(item => (item.id > 1  && item.id < 17 ));
-  const select_3 = data.filter(item => (item.id > 113  && item.id < 130 ));
-  const select_4 = data.filter(item => (item.id > 16  && item.id < 31 ));
 
-  const select_5 = data.filter(item => (item.id > 30  && item.id < 35 ));
-  const select_6 = data.filter(item => (item.id > 129  && item.id < 133 ));
-  const select_7 = data.filter(item => (item.id > 34  && item.id < 40 ));
-  const select_8 = data.filter(item => (item.id > 132  && item.id < 139 ));
-  const select_9 = data.filter(item => (item.id > 138  && item.id < 144 ));
-    
+  /*커피 캡슐 브랜드 이름
+  const 스타벅스 = data.filter(item => (item.id > 39  && item.id <114 ));
+  const 네스프레소 = data.filter(item => (item.id > 1  && item.id < 17 ));
+  const 일리 = data.filter(item => (item.id > 113  && item.id < 130 ));
+  const 카누 = data.filter(item => (item.id > 16  && item.id < 31 ));
+
+  const 이디야 = data.filter(item => (item.id > 30  && item.id < 35 ));
+  const 할리스 = data.filter(item => (item.id > 129  && item.id < 133 ));
+  const 폴바셋 = data.filter(item => (item.id > 34  && item.id < 40 ));
+  const 투썸 = data.filter(item => (item.id > 132  && item.id < 139 ));
+  const 던킨 = data.filter(item => (item.id > 138  && item.id < 144 ));
+  */
+
     return (
         <>
         <Wrapper>
             <Header>
                 <Title>마이 페이지 </Title>
             </Header>
-        <MenuBox>
-        <Menu 
-         value = {index}
-         name="coffee"
-         onChange={(e:React.ChangeEvent<HTMLSelectElement>) => {//타입스크립트에서 
-            setIndex(e.target.value); //option에서 선택한 index를 select index로 전달
-        }}
-         >
-         <Option value="1">네스프레소</Option>
-         <Option value="2">스타벅스</Option>
-         <Option value="3">일리</Option>
-         <Option value="4">카누</Option>
-         <Option value="5">이디야</Option>
-         <Option value="6">할리스</Option>
-         <Option value="7">폴바셋</Option>
-         <Option value="8">투썸</Option>
-         <Option value="9">던킨</Option>
-        </Menu>
-        </MenuBox>
-        <AnimatePresence>
-        {index=="1" ?  (  //네스프레소
+       
         <Ul>
         {
          <li style = {{color:"black"}}>
          { 
-           select_1?.map((item)=> (
+           data?.map((item)=> (
              <Box 
                 layoutId={item.id +""}
                 key={item.id}
@@ -324,219 +293,6 @@ function Mypage(){
         }
          
        </Ul>
-     ):(
-       null
-      ) }
-
-
-        {index=="2" ?  (//스타벅스 (id:2~16)
-        <Ul>
-         {
-          <li style = {{color:"black"}}>
-          { 
-            select_2?.map((item)=> (
-              <Box 
-                 layoutId={item.id +""}
-                 key={item.id}
-                 onClick = {()=> onBoxClicked(item.id)}
-                 >
-                  <Img
-                src={require(`../images/capsule/${item.id}.png`)}
-              /> 
-                 {item.name} 
-                </Box>
-            ))
-            }
-        </li>
-         }
-          
-        </Ul>
-      ):(
-        null
-      ) }
-
-      {index=="3" ?  ( //일리(id:114~129 )
-        <Ul>
-        {
-         <li style = {{color:"black"}}>
-         { 
-           select_3?.map((item)=> (
-             <Box 
-                layoutId={item.id +""}
-                key={item.id}
-                onClick = {()=> onBoxClicked(item.id)}
-                >
-                 <Img
-               src={require(`../images/capsule/${item.id}.png`)}
-             /> 
-                {item.name} 
-               </Box>
-           ))
-           }
-       </li>
-        }
-         
-       </Ul>
-     ):(
-       null
-      ) }
-
-      {index=="4" ?  ( //카누(id:17~30)
-        <Ul>
-        {
-         <li style = {{color:"black"}}>
-         { 
-           select_4?.map((item)=> (
-             <Box 
-                layoutId={item.id +""}
-                key={item.id}
-                onClick = {()=> onBoxClicked(item.id)}
-                >
-                 <Img
-               src={require(`../images/capsule/${item.id}.png`)}
-             /> 
-                {item.name} 
-               </Box>
-           ))
-           }
-       </li>
-        }
-         
-       </Ul>
-     ):(
-       null
-      ) }
-
-    {index=="5" ?  ( //이디야(id:130~132)
-        <Ul>
-        {
-         <li style = {{color:"black"}}>
-         { 
-           select_5?.map((item)=> (
-             <Box 
-                layoutId={item.id +""}
-                key={item.id}
-                onClick = {()=> onBoxClicked(item.id)}
-                >
-                 <Img
-               src={require(`../images/capsule/${item.id}.png`)}
-             /> 
-                {item.name} 
-               </Box>
-           ))
-           }
-       </li>
-        }
-         
-       </Ul>
-     ):(
-       null
-      ) }
-
-    {index=="6" ?  ( //할리스(id:31~34)
-        <Ul>
-        {
-         <li style = {{color:"black"}}>
-         { 
-           select_6?.map((item)=> (
-             <Box 
-                layoutId={item.id +""}
-                key={item.id}
-                onClick = {()=> onBoxClicked(item.id)}
-                >
-                 <Img
-               src={require(`../images/capsule/${item.id}.png`)}
-             /> 
-                {item.name} 
-               </Box>
-           ))
-           }
-       </li>
-        }
-         
-       </Ul>
-     ):(
-       null
-      ) }
-
-    {index=="7" ?  ( //폴바셋(id:35~39)
-        <Ul>
-        {
-         <li style = {{color:"black"}}>
-         { 
-           select_7?.map((item)=> (
-             <Box 
-                layoutId={item.id +""}
-                key={item.id}
-                onClick = {()=> onBoxClicked(item.id)}
-                >
-                 <Img
-               src={require(`../images/capsule/${item.id}.png`)}
-             /> 
-                {item.name} 
-               </Box>
-           ))
-           }
-       </li>
-        }
-         
-       </Ul>
-     ):(
-       null
-      ) }
-
-    {index=="8" ?  (//투썸(id:133~138)
-        <Ul>
-        {
-         <li style = {{color:"black"}}>
-         { 
-           select_8?.map((item)=> (
-             <Box 
-                layoutId={item.id +""}
-                key={item.id}
-                onClick = {()=> onBoxClicked(item.id)}
-                >
-                 <Img
-               src={require(`../images/capsule/${item.id}.png`)}
-             /> 
-                {item.name} 
-               </Box>
-           ))
-           }
-       </li>
-        }
-         
-       </Ul>
-     ):(
-       null
-      ) }
-
-    {index=="9" ?  ( //던킨(id:139~143)
-        <Ul>
-        {
-         <li style = {{color:"black"}}>
-         { 
-           select_9?.map((item)=> (
-             <Box 
-                layoutId={item.id +""}
-                key={item.id}
-                onClick = {()=> onBoxClicked(item.id)}
-                >
-                 <Img
-               src={require(`../images/capsule/${item.id}.png`)}
-             /> 
-                {item.name} 
-               </Box>
-           ))
-           }
-       </li>
-        }
-         
-       </Ul>
-     ):(
-       null
-      ) }
-          </AnimatePresence>
           <AnimatePresence>
             
             {bigRoadMatch ? (
@@ -554,7 +310,7 @@ function Mypage(){
               {
                 clickedBox && 
                 (<>
-                    { 
+                    {/*서버에서 보내준 데이터 "속성" 값으로 수정 */
                     <>
                     <ImgBox>
                       <img style = {{width:"100%", height:"100%"}} src={require(`../images/capsule/${coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.id}.png` )}/>
@@ -577,7 +333,10 @@ function Mypage(){
                       </Li>
                       <br></br>
                       <Li>
-                      <strong>머신:</strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.커피머신} 
+                      <strong>머신:</strong>{coffee.find((item) => item.id === +bigRoadMatch.params.itemId)?.커피머신
+                                            /*coffe 부분의 데이터만 변경하면 됨 */
+                      
+                      } 
                       </Li>
                       <br></br>
                       <Li><strong>구매 링크 </strong> {rarr} <Button  onClick={()=>{

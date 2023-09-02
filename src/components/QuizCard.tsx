@@ -19,7 +19,7 @@ const Wrapper = styled.div`
   background-color:whitesmoke;
 `;
 
-const Div = styled(motion.div)`//화면을 부드럽게 넘기는 모션 적용
+const Div = styled(motion.div)`
   background-color:whitesmoke;
   width: 600px; 
   height: 600px;
@@ -34,7 +34,7 @@ const Div = styled(motion.div)`//화면을 부드럽게 넘기는 모션 적용
     cursor: pointer;
   }
 `;
-//화면 넘길 때 나타나는 애니메이션 효과
+//화면 넘길 때 나타나는 애니메이션 효과 적용
 const divVariants = {
     initial: {
       opacity: 0
@@ -103,13 +103,13 @@ const score:[number[], IScore] = [
 //사용자가 누른 버튼 값 저장
 const buttonValue:number[] = [0,0,0,0,0,0,0,0];
 
-//버튼을 배열 형태로 보내보기로 결정!
 const QuizCard: React.FC<RouteComponentProps<MatchParams>>
-      = ({match}) => {//match는 질문 번호 ex) 1,2,3 ...
+      = ({match}) => {//match는 퀴즈 번호 ex) 1,2,3 ...
 
-        //1) 페이지 넘길 때마다 퀴즈 번호 나타나게함
+        //1) 퀴즈 페이지 넘길 때마다 퀴즈 번호 렌더링
         const [curQuiz, setQuiz] = useState<IQuiz>();
         const [id, setId] = useState<number>(0);
+        
         //2) 페이지 변경 되었을 때, state 변경
         useEffect(() => {
             const num = parseInt(match.params.id);
@@ -123,13 +123,37 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
         const [num,setNum] = useState(0);
         const onclick =(item:IContent)=> {
             
-            buttonValue[num] = item.value;
+            buttonValue[num] = item.value; //사용자가 선택한 버튼 번호를 입력
             setNum((num)=> num+1);
             
             if(num === 7){
-                console.log(buttonValue); //해당 배열을 서버에 전송할 수 있음
-                /*서버 전송 코드 */
-                setNum((num)=> 0);
+                console.log(buttonValue); //=>> 해당 배열을 서버에 전송할 수 있음 - 정상 출력
+        /*서버 전송 코드 
+                axios.post( '배포한 서버 URL',
+          { //왼쪽 값: 서버 데이터 변수 이름(일단 샘플로 작성), 오른쪽 값: 프론트 변수 이름 
+            n1:buttonValue[0]+",
+            n2:buttonValue[1]+",
+            n3:buttonValue[2]+",
+            n4:buttonValue[3]+",
+            n5:buttonValue[4]+",
+            n6:buttonValue[5]+",
+            n7:buttonValue[6]+",
+            n8:buttonValue[7]+",
+          },
+          {
+            headers: {
+              //'Content-Type': 'application/json',
+              "Access-Control-Allow-Origin" : "*",
+
+            }
+          })
+          .then((response) => {//서버에 데이터가 제대로 전송되었을 경우
+          }).catch((error) => { //서버에 데이터가 제대로 전송되지 않은 경우
+            console.log("서버와 연결되지 않습니다");
+            window.alert(error);
+          })
+        */
+                setNum((num)=> 0);//퀴즈 번호 0번 질문으로 초기화
                 
             }
             getScore(item.weight);
