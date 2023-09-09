@@ -1,10 +1,17 @@
-import { atom } from "recoil";
+import { atom, useRecoilValue } from "recoil";
 
 //로그인 완료 후, 반환된 이메일로 값 저장 
 export const isLoginAtom = atom({
     key: 'isLogin',
     default: "",
   });
+//로그인 완료 후, 반환된 mem_id로 값 저장
+export const isMemIdAtom = atom({
+    key: 'isMemId', //52번으로 저장되어 있음
+    default: 0,
+  });
+
+
 //캡슐 정보 데이터 이름 및 값
 export interface IData{
     id:number;

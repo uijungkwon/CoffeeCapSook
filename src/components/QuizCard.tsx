@@ -5,6 +5,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from "react";
 import { RouteComponentProps,withRouter } from "react-router-dom";
 import quiz from "../contents/questions";
+import { useRecoilValue } from 'recoil';
+import {  isMemIdAtom } from '../atoms';
+import { useQuery } from 'react-query';
 
 const Wrapper = styled.div`
   overflow-x: hidden;
@@ -101,10 +104,18 @@ const score:[number[], IScore] = [
     }
 ];
 //사용자가 누른 버튼 값 저장
-const buttonValue:number[] = [0,0,0,0,0,0,0,0];
+const buttonValue:number[] = [0,0,0,0,0];
+
+/* 반환 데이터 값 예시로 작성 */
+interface ITest{
+  capsule_type:string;
+  capsule_id:string; //캡슐 id만 넘겨 받을지, 전체 속성을 다 줄지 의논!
+};
 
 const QuizCard: React.FC<RouteComponentProps<MatchParams>>
       = ({match}) => {//match는 퀴즈 번호 ex) 1,2,3 ...
+        //0) recoil 값 가져오기  & API fetch 하기
+        const member_id = useRecoilValue(isMemIdAtom);
 
         //1) 퀴즈 페이지 넘길 때마다 퀴즈 번호 렌더링
         const [curQuiz, setQuiz] = useState<IQuiz>();
@@ -126,19 +137,16 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
             buttonValue[num] = item.value; //사용자가 선택한 버튼 번호를 입력
             setNum((num)=> num+1);
             
-            if(num === 7){
+            if(num === 4){
                 console.log(buttonValue); //=>> 해당 배열을 서버에 전송할 수 있음 - 정상 출력
         /*서버 전송 코드 
-                axios.post( '배포한 서버 URL',
+          axios.post( `https://port-0-coffeecapsook-3prof2llleypwbv.sel3.cloudtype.app/favorite-test/${member_id}`,
           { //왼쪽 값: 서버 데이터 변수 이름(일단 샘플로 작성), 오른쪽 값: 프론트 변수 이름 
             n1:buttonValue[0]+",
             n2:buttonValue[1]+",
             n3:buttonValue[2]+",
             n4:buttonValue[3]+",
             n5:buttonValue[4]+",
-            n6:buttonValue[5]+",
-            n7:buttonValue[6]+",
-            n8:buttonValue[7]+",
           },
           {
             headers: {
@@ -173,7 +181,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
         <Wrapper>
           <AnimatePresence>  
             <QuizWrapper>              
-                {parseInt(match.params.id) < 8 &&
+                {parseInt(match.params.id) < 5 &&
                 <Div
                 key={match.params.id} //키를 다르게 설정 해주어야 해당 애니메이션이 계속 설정됨
                 initial="initial"
@@ -200,7 +208,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                 </Div>
                 }
             
-                {parseInt(match.params.id) == 8 &&
+                {parseInt(match.params.id) == 5 &&
                 <Div
                 key={match.params.id} //키를 다르게 설정 해주어야 해당 애니메이션이 계속 설정됨
                 initial="initial"

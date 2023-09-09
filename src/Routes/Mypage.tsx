@@ -210,7 +210,7 @@ const Info = styled.div`
 `;
 
 interface ICapsuleType{
-  /*서버에서 받는 데이터 타입 및 이름 정의 - 전체 속성 적기*/
+  /*서버에서 받는 데이터 타입 및 이름 정의 - 전체 속성 적기, DB 예시로 작성*/
   coffee_id:string;
   coffee_name:string;
   origin:string;

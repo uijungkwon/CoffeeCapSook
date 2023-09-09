@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useHistory } from 'react-router-dom';
 import { useRecoilState} from "recoil";
 import axios from "axios";
-import { isLoginAtom } from "../atoms";
+import { isLoginAtom, isMemIdAtom } from "../atoms";
 const Wrapper = styled.div`
   overflow-x: hidden;
   height: 100vh;
@@ -94,6 +94,7 @@ interface IForm {
 function Login(){
   //1) 로그인 완료 후, 이메일 상태 변화
   const [log, setLog] = useRecoilState(isLoginAtom);
+  const [mem, setMem] = useRecoilState(isMemIdAtom);
   //2) 비밀번호 설정
   const [showPswd, setShowPswd] = useState<boolean>(false);
   const history = useHistory();
@@ -124,6 +125,8 @@ function Login(){
     .then((response) => {
       window.alert('로그인 완료되었습니다.')
       setLog((log) => response?.data?.email);//로그인 완료되면, log값을 반환받은 이메일 값으로 변경
+      setMem((mem)=> response?.data?.member_id); //52
+      
       history.push('/') //로그인 후 홈화면으로 돌아가기
     })
     .catch((error) => {

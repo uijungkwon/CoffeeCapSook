@@ -1,122 +1,77 @@
 //버튼에 번호 부여 OR 버튼 이름 부여 방법 고민(서버로 값 넘겨주는거 논의)
-//[유형1,유형2,유형3,유형4,유형5, ]
+//[유형1,유형2,유형3,유형4,유형5]
 const questions = [
     {
-        title:"놀러 다닐 때 내가 들고 다니는 것은?",
+        title:"내가 선호하는 커피의 맛은? ",
         content:[
             {
-                answer:"귀여운 미니백",
+                answer:"씁쓸한 커피 ",
                 weight:[4,3,0,0,0],
                 value:1 //버튼 값을 숫자로 변경 
             },
             {
-                answer:"물건 가득  보부상백",
+                answer:"산미 있는 커피 ",
                 weight: [0,4,1,2,2],
                 value:2
             }
         ]
     },
     {
-        title:"여행지를 선택할 때 선호하는 풍경은? ",
+        title:"내가 선호하는 커피의 깊이는?",
         content:[
             {
-                answer:"자연 풍경",
+                answer:"깊은 맛",
                 weight: [4, 4, 0, 0, 0],
                 value:1
             },
             {
-                answer:"도시 풍경",
+                answer:"가벼운 맛",
                 weight: [0, 0, 4, 5, 5],
                 value:2
             }
         ]
     },
     {
-        title:"카페에서 음료를 마실 때 사이즈업을 한다? ",
+        title:"내가 선호하는 커피의 목넘김은? ",
         content:[
             {
-                answer:"한다",
+                answer:"묵직함",
                 weight: [5, 5, 0, 0, 0],
                 value:1
             },
             {
-                answer:"안한다",
+                answer:"가벼움",
                 weight: [0, 0, 5, 5, 5],
                 value:2
             }
         ]
     },
     {
-        title:" 나에게 가장 달콤함을 주는 커피는? ",
+        title:"내가 좋아하는 쿠키의 맛은?",
         content:[
             {
-                answer:"점심에 밥먹고 먹는 커피",
+                answer:"담백, 고소한 쿠키",
                 weight: [5, 4, 4, 0, 0],
                 value:1
             },
             {
-                answer:"밤샐 때 먹는 커피",
+                answer:"달콤한 쿠키",
                 weight: [0, 0, 0, 4, 4],
                 value:2
             }
         ]
     },
     {
-        title:"내가 좋아하는 과자 종류는? ",
+        title:"내가 선호하는 커피 마시는 시간대는?",
         content:[
             {
-                answer:"칸쵸",
+                answer:"아침에 가볍게 먹기",
                 weight: [3, 5, 0, 0, 3],
                 value:1
             },
             {
-                answer:"포테이토칩",
+                answer:"밤 샐 때 먹기",
                 weight: [0, 5, 2,4, 4],
-                value:2
-            }
-        ]
-    },
-    {
-        title:"내가 먹는 아침 식사는? ",
-        content:[
-            {
-                answer:"프렌치 토스트",
-                weight: [4, 3, 0, 4, 0],
-                value:1
-            },
-            {
-                answer:"뜨끈한 국밥",
-                weight: [0, 3, 4, 4, 5],
-                value:2
-            }
-        ]
-    },
-    {
-        title:"좋아하는 아이스크림은? ",
-        content:[
-            {
-                answer:"빵빠레",
-                weight: [5, 0, 4, 3, 3],
-                value:1
-            },
-            {
-                answer:"폴라포",
-                weight: [4, 4, 3, 5, 5],
-                value:2
-            }
-        ]
-    },
-    {
-        title:"술먹고 해장을 해야한다. 어떤 라면을 먹을까? ",
-        content:[
-            {
-                answer:"사리곰탕",
-                weight: [5, 0, 5, 0, 0],
-                value:1
-            },
-            {
-                answer:"열라면",
-                weight: [0, 3, 0, 5, 5],
                 value:2
             }
         ]
