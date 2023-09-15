@@ -97,6 +97,7 @@ function Header(){
     const allCapMatch = useRouteMatch("/AllCap");
     const enrollMatch = useRouteMatch("/Enroll");
     const loginMatch = useRouteMatch("/Login");
+    const testMatch = useRouteMatch("/QuizPage/1");
     //3) 로고 클릭시 홈으로 이동
     const history = useHistory();
     const gohome = () => {
@@ -141,6 +142,11 @@ function Header(){
             {
               log?(
             <LogItems>
+              <Item>
+                <Link to="/QuizPage/1">
+                취향 테스트 {testMatch ? <Circle layoutId="circle" /> : null}
+                </Link>
+              </Item>
               <Item>
                 <Link to="/AllCap">
                 전체 캡슐 {allCapMatch ? <Circle layoutId="circle" /> : null}

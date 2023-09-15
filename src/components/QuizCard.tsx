@@ -5,9 +5,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from "react";
 import { RouteComponentProps,withRouter } from "react-router-dom";
 import quiz from "../contents/questions";
-import { useRecoilValue } from 'recoil';
-import {  isMemIdAtom } from '../atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {  ICoffee, coffeeState, isCoffeeIdAtom, isMemIdAtom } from '../atoms';
 import { useQuery } from 'react-query';
+import axios from 'axios';
+
+const Bg = require("../images/coffee.jpg");
 
 const Wrapper = styled.div`
   overflow-x: hidden;
@@ -19,7 +22,8 @@ const Wrapper = styled.div`
   padding: 60px;
   background-size: cover;
   position: relative;
-  background-color:whitesmoke;
+  //background-color:rgba(248, 248, 248, 0.788);
+  background-image:linear-gradient(rgba(0, 0, 0, 0.117), #000000ae), url(${Bg});
 `;
 
 const Div = styled(motion.div)`
@@ -27,7 +31,7 @@ const Div = styled(motion.div)`
   width: 600px; 
   height: 600px;
   border-radius: 30px;
-  box-shadow: 0px 2px 4px black; 
+  box-shadow: 0px 4px 8px black; 
   margin-top: 22px;
   display: flex;
   align-items: center;
@@ -37,6 +41,7 @@ const Div = styled(motion.div)`
     cursor: pointer;
   }
 `;
+
 //화면 넘길 때 나타나는 애니메이션 효과 적용
 const divVariants = {
     initial: {
@@ -50,25 +55,35 @@ const divVariants = {
     }
   };
 const Title = styled.div`
-    margin-bottom:30px;
+    width:550px;
+    height:130px;
+    margin-bottom:40px;
+    background-color: rgba(230, 228, 228, 0.788);
+    border: none;
+	  border-radius: 10px;
 `;
+
 const ImgBox = styled.div`
     width:540px;
     height:300px;
 `;
+
 const Button = styled.button`
-	width:300px;
-    height:40px;
-    font-family:"Hanna" ;
-    font-weight:bold;
-	background-color: rgba(211, 211, 211, 0.798);
+	width:90px;
+  height:40px;
+  font-family:"Hanna" ;
+  font-weight:bold;
+	background-color: rgba(196, 196, 196, 0.798);
+  //background-color:#eee6C4;
 	border: none;
-	border-radius: 10px;
-	font-size: 23px;
+  margin-right: 20px;
+	border-radius: 80px;
+
+	font-size: 20px;
 	color: ${(props) => props.theme.accentColor};
     margin-top:21px;
     &:hover {//바로 위 태그를 가리킴
-      color: #213fff;
+      color: #fdfdfd;
       cursor: pointer;
     }
 `;
@@ -80,7 +95,7 @@ interface MatchParams {
 interface IContent{//질문에 대한 대답, 대답에 대한 점수
     answer:string;
     weight:number[];
-    value:number;
+    value:string;
 }
 interface IQuiz {//질문 제목, 질문 내용
     title:string;
@@ -104,7 +119,7 @@ const score:[number[], IScore] = [
     }
 ];
 //사용자가 누른 버튼 값 저장
-const buttonValue:number[] = [0,0,0,0,0];
+const buttonValue:string[] = ["0","0","0","0","0","0","0","0"];
 
 /* 반환 데이터 값 예시로 작성 */
 interface ITest{
@@ -116,6 +131,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
       = ({match}) => {//match는 퀴즈 번호 ex) 1,2,3 ...
         //0) recoil 값 가져오기  & API fetch 하기
         const member_id = useRecoilValue(isMemIdAtom);
+        const [coffee, setCoffee]= useRecoilState<ICoffee>(coffeeState);
 
         //1) 퀴즈 페이지 넘길 때마다 퀴즈 번호 렌더링
         const [curQuiz, setQuiz] = useState<IQuiz>();
@@ -137,16 +153,20 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
             buttonValue[num] = item.value; //사용자가 선택한 버튼 번호를 입력
             setNum((num)=> num+1);
             
-            if(num === 4){
+            if(num === 7){
                 console.log(buttonValue); //=>> 해당 배열을 서버에 전송할 수 있음 - 정상 출력
-        /*서버 전송 코드 
           axios.post( `https://port-0-coffeecapsook-3prof2llleypwbv.sel3.cloudtype.app/favorite-test/${member_id}`,
           { //왼쪽 값: 서버 데이터 변수 이름(일단 샘플로 작성), 오른쪽 값: 프론트 변수 이름 
-            n1:buttonValue[0]+",
-            n2:buttonValue[1]+",
-            n3:buttonValue[2]+",
-            n4:buttonValue[3]+",
-            n5:buttonValue[4]+",
+            n1:buttonValue[0],
+            n2:buttonValue[1],
+            n3:buttonValue[2],
+            n4:buttonValue[3],
+            n5:buttonValue[4],
+            n6:buttonValue[5],
+            n7:buttonValue[6],
+            n8:buttonValue[7],
+            type:"4",
+            coffee_id:"140",
           },
           {
             headers: {
@@ -156,11 +176,18 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
             }
           })
           .then((response) => {//서버에 데이터가 제대로 전송되었을 경우
+            console.log(response?.data);
+            setCoffee({
+              type:response?.data?.type,
+              coffee_id:response?.data?.coffee_id ,coffeeName:response?.data?.coffeeName, tasteAndAroma:response?.data?.tasteAndAroma,
+              compatible:response?.data?.compatible, purchaseLink:response?.data?.purchaseLink
+            });
           }).catch((error) => { //서버에 데이터가 제대로 전송되지 않은 경우
+
             console.log("서버와 연결되지 않습니다");
             window.alert(error);
           })
-        */
+        
                 setNum((num)=> 0);//퀴즈 번호 0번 질문으로 초기화
                 
             }
@@ -181,7 +208,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
         <Wrapper>
           <AnimatePresence>  
             <QuizWrapper>              
-                {parseInt(match.params.id) < 5 &&
+                {parseInt(match.params.id) < 8 &&
                 <Div
                 key={match.params.id} //키를 다르게 설정 해주어야 해당 애니메이션이 계속 설정됨
                 initial="initial"
@@ -191,24 +218,32 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                 variants={divVariants}
                 >
                 <Title>
-                    <h1 style = {{color:"black", fontSize:"45px",fontWeight:"bold"}}>Q{match.params.id}</h1>
+                    <h1 style = {{color:"black", fontSize:"40px",fontWeight:"bold"}}>Q{match.params.id}</h1>
                     <h1 style = {{color:"black"}}>ㅣ</h1>
-                    <h1 style = {{color:"black", fontSize:"30px",}}>{curQuiz?.title}</h1>
+                    <h1 style = {{color:"black", fontSize:"25px",}}>{curQuiz?.title}</h1>
+                    {parseInt(match.params.id) == 4 &&
+                    <h1 style = {{color:"black", fontSize:"17px", marginTop:"10px"}}> 
+                      **로스팅 강도가 약할 수록 산미가 강해지고,강할 수록 쓴맛이 강해진다.
+                    </h1>
+
+                    }
                 </Title>
-                    <ImgBox>
-                      <img src={require(`../images/${match.params.id}.png`)}/>
-                    </ImgBox>
-                    {curQuiz?.content && curQuiz?.content.map((item, index) => (
+                <div
+                style = {{flexDirection: "row"}}
+                  >
+                  {curQuiz?.content && curQuiz?.content.map((item, index) => (
                         <Link to={`/QuizPage/${id}`} key={index} >
                             <Button 
                                 onClick={ () => onclick(item)/*() => getScore(item.weight)*/}> {item.answer}
                             </Button>
                         </Link>
                     ))}
+                </div>
+                    
                 </Div>
                 }
             
-                {parseInt(match.params.id) == 5 &&
+                {parseInt(match.params.id) == 8 &&
                 <Div
                 key={match.params.id} //키를 다르게 설정 해주어야 해당 애니메이션이 계속 설정됨
                 initial="initial"
@@ -218,22 +253,21 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                 variants={divVariants}
                 >
                 <Title>
-                    <h1 style = {{color:"black", fontSize:"30px",}}>Q{match.params.id}</h1>
-                    <br />
-                    <h1 style = {{color:"black", fontSize:"30px",}}>{curQuiz?.title}</h1>
+                    <h1 style = {{color:"black", fontSize:"40px",fontWeight:"bold"}}>Q{match.params.id}</h1>
+                    <h1 style = {{color:"black"}}>ㅣ</h1>
+                    <h1 style = {{color:"black", fontSize:"25px",}}>{curQuiz?.title}</h1>
                 </Title>
-                <ImgBox>
-                      <img  src={require(`../images/${match.params.id}.png`)}/>
-                </ImgBox>
-                    {curQuiz?.content && curQuiz?.content.map((item:any, index:number) => (
-                        <Link to={`/ResultPage/${score[1].maxIdx}`} key={index}>
-                            
+                <div
+                style = {{flexDirection: "row"}}
+                  >
+                  {curQuiz?.content && curQuiz?.content.map((item, index) => (
+                        <Link to={`/ResultPage/${coffee.type}`} key={index}>
                             <Button 
-                                onClick={() => onclick(item)
-                                }>{item.answer}
+                                onClick={ () => onclick(item)/*() => getScore(item.weight)*/}> {item.answer}
                             </Button>
                         </Link>
                     ))}
+                </div>
                 </Div>
             }
           

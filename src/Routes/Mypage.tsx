@@ -6,7 +6,8 @@ import { Link, useHistory, useRouteMatch } from "react-router-dom";
 import { AnimatePresence, motion, useScroll,useMotionValueEvent, } from "framer-motion";
 import { coffee } from "../data/coffee";
 import { useRecoilValue } from "recoil";
-import { dataState,fetchcapsule } from "../atoms";
+import { dataState, isMemIdAtom } from "../atoms";
+import axios from 'axios';
 const Wrapper = styled.div`
   overflow-x: hidden;
   height:1200vh;
@@ -211,22 +212,52 @@ const Info = styled.div`
 
 interface ICapsuleType{
   /*서버에서 받는 데이터 타입 및 이름 정의 - 전체 속성 적기, DB 예시로 작성*/
-  coffee_id:string;
-  coffee_name:string;
-  origin:string;
-  ingredient:string;
-  taste_and_aroma:string;
-  compatible:string;
-  purchase:string;
+  coffee_id: number,
+  coffeeName: string,
+  origin: string,
+  ingredient: string,
+  strength: string,
+  bitter: string,
+  acidity: string,
+  roasting: string,
+  tasteAndAroma: string,
+  change_tasteAndAroma: string,
+  type: string,
+  extraction: string,
+  compatible: string,
+  purchaseLink: string,
 };
 
 function Mypage(){
 
   /*sample - 로컬에 저장한 랜덤으로 추천 받은 캡슐 데이터*/
-  const data = useRecoilValue(dataState);
+  //const data = useRecoilValue(dataState);
 
   /*서버에 저장된 캡슐 데이터들 모두 가져오기 */
-  const { data:capsule, isLoading } = useQuery<ICapsuleType>(["Coffe","capsule"], fetchcapsule);
+const member_id = useRecoilValue(isMemIdAtom);
+//const [data, setData] = useState<ICapsuleType[]>();
+
+function fetchcapsule() { //마이페이지에 저장된 캡슐 목록 가져오기
+  return fetch(`https://port-0-coffeecapsook-3prof2llleypwbv.sel3.cloudtype.app/my-coffee/${member_id}`) //예시 URL
+  .then((response) =>
+    response.json() //"저장된 스타벅스 캡슐 목록 반환받기"
+  );
+}
+/*
+  useEffect( ()=>{
+    axios.get(`https://port-0-coffeecapsook-3prof2llleypwbv.sel3.cloudtype.app/my-coffee/${member_id}`)
+    .then(function (response) {
+         setData(response?.data);
+         console.log(response);
+    }).catch(function (error) {
+         console.log("연결에 실패했습니다");
+    }).then(function() {
+        // 항상 실행
+    });
+    }
+  )
+  */
+  const { isLoading, data} = useQuery<ICapsuleType[]>('allCoffee', fetchcapsule);
 
   var url = "sample";
   const rarr = "-->";
@@ -264,7 +295,7 @@ function Mypage(){
   const 투썸 = data.filter(item => (item.id > 132  && item.id < 139 ));
   const 던킨 = data.filter(item => (item.id > 138  && item.id < 144 ));
   */
-
+    
     return (
         <>
         <Wrapper>
@@ -275,17 +306,18 @@ function Mypage(){
         <Ul>
         {
          <li style = {{color:"black"}}>
+        
          { 
            data?.map((item)=> (
              <Box 
-                layoutId={item.id +""}
-                key={item.id}
-                onClick = {()=> onBoxClicked(item.id)}
+                layoutId={ item.coffee_id +""}
+                //key={"1"}
+                onClick = {()=> onBoxClicked(item.coffee_id)}
                 >
                  <Img
-               src={require(`../images/capsule/${item.id}.png`)}
+               src={require(`../images/capsule/${item.coffee_id}.png`)}
              /> 
-                {item.name} 
+                {item.coffeeName} 
                </Box>
            ))
            }

@@ -2,78 +2,223 @@
 //[유형1,유형2,유형3,유형4,유형5]
 const questions = [
     {
-        title:"내가 선호하는 커피의 맛은? ",
+        title:"원하는 커피 강도를 선택해주세요.",
         content:[
             {
-                answer:"씁쓸한 커피 ",
+                answer:"아주 약함",
                 weight:[4,3,0,0,0],
-                value:1 //버튼 값을 숫자로 변경 
+                value:"1" //버튼 값을 숫자로 변경 
             },
             {
-                answer:"산미 있는 커피 ",
+                answer:"약함",
                 weight: [0,4,1,2,2],
-                value:2
-            }
+                value:"2"
+            },
+            {
+                answer:"보통",
+                weight:[4,3,0,0,0],
+                value:"3" //버튼 값을 숫자로 변경 
+            },
+            {
+                answer:"강함",
+                weight: [0,4,1,2,2],
+                value:"4"
+            },
+            {
+                answer:"매우 강함",
+                weight:[4,3,0,0,0],
+                value:"5" //버튼 값을 숫자로 변경 
+            },
         ]
     },
     {
-        title:"내가 선호하는 커피의 깊이는?",
+        title:"원하는 커피의 쓴맛 정도를 선택해주세요.",
         content:[
             {
-                answer:"깊은 맛",
-                weight: [4, 4, 0, 0, 0],
-                value:1
+                answer:"아주 약함",
+                weight:[4,3,0,0,0],
+                value:"1" //버튼 값을 숫자로 변경 
             },
             {
-                answer:"가벼운 맛",
-                weight: [0, 0, 4, 5, 5],
-                value:2
-            }
+                answer:"약함",
+                weight: [0,4,1,2,2],
+                value:"2"
+            },
+            {
+                answer:"보통",
+                weight:[4,3,0,0,0],
+                value:"3" //버튼 값을 숫자로 변경 
+            },
+            {
+                answer:"강함",
+                weight: [0,4,1,2,2],
+                value:"4"
+            },
+            {
+                answer:"매우 강함",
+                weight:[4,3,0,0,0],
+                value:"5" //버튼 값을 숫자로 변경 
+            },
         ]
     },
     {
-        title:"내가 선호하는 커피의 목넘김은? ",
+        title:"원하는 커피의 산미 정도를 선택해주세요.",
         content:[
             {
-                answer:"묵직함",
-                weight: [5, 5, 0, 0, 0],
-                value:1
+                answer:"아주 약함",
+                weight:[4,3,0,0,0],
+                value:"1" //버튼 값을 숫자로 변경 
             },
             {
-                answer:"가벼움",
-                weight: [0, 0, 5, 5, 5],
-                value:2
-            }
+                answer:"약함",
+                weight: [0,4,1,2,2],
+                value:"2"
+            },
+            {
+                answer:"보통",
+                weight:[4,3,0,0,0],
+                value:"3" //버튼 값을 숫자로 변경 
+            },
+            {
+                answer:"강함",
+                weight: [0,4,1,2,2],
+                value:"4"
+            },
+            {
+                answer:"매우 강함",
+                weight:[4,3,0,0,0],
+                value:"5" //버튼 값을 숫자로 변경 
+            },
         ]
     },
     {
-        title:"내가 좋아하는 쿠키의 맛은?",
+        title:"원하는 로스팅의 정도를 선택해주세요.",
         content:[
             {
-                answer:"담백, 고소한 쿠키",
-                weight: [5, 4, 4, 0, 0],
-                value:1
+                answer:"아주 약함",
+                weight:[4,3,0,0,0],
+                value:"1" //버튼 값을 숫자로 변경 
             },
             {
-                answer:"달콤한 쿠키",
-                weight: [0, 0, 0, 4, 4],
-                value:2
-            }
+                answer:"약함",
+                weight: [0,4,1,2,2],
+                value:"2"
+            },
+            {
+                answer:"보통",
+                weight:[4,3,0,0,0],
+                value:"3" //버튼 값을 숫자로 변경 
+            },
+            {
+                answer:"강함",
+                weight: [0,4,1,2,2],
+                value:"4"
+            },
+            {
+                answer:"매우 강함",
+                weight:[4,3,0,0,0],
+                value:"5" //버튼 값을 숫자로 변경 
+            },
         ]
     },
     {
-        title:"내가 선호하는 커피 마시는 시간대는?",
+        title:"아래의 보기에서 가장 선호하는 맛과향을 선택해주세요.",
         content:[
             {
-                answer:"아침에 가볍게 먹기",
-                weight: [3, 5, 0, 0, 3],
-                value:1
+                answer:"고소함",
+                weight:[4,3,0,0,0],
+                value:"1" //버튼 값을 숫자로 변경 
             },
             {
-                answer:"밤 샐 때 먹기",
-                weight: [0, 5, 2,4, 4],
-                value:2
-            }
+                answer:"스파이시 향",
+                weight: [0,4,1,2,2],
+                value:"2"
+            },
+            {
+                answer:"과일 향",
+                weight:[4,3,0,0,0],
+                value:"3" //버튼 값을 숫자로 변경 
+            },
+            {
+                answer:"부드러운 향",
+                weight: [0,4,1,2,2],
+                value:"4"
+            },
+        ]
+    },
+    {
+        title:"아래의 보기에서 가장 선호하는 맛과향을 선택해주세요.",
+        content:[
+            {
+                answer:"견과류 맛",
+                weight:[4,3,0,0,0],
+                value:"1" //버튼 값을 숫자로 변경 
+            },
+            {
+                answer:"쓴 맛",
+                weight: [0,4,1,2,2],
+                value:"2"
+            },
+            {
+                answer:"꽃 향",
+                weight:[4,3,0,0,0],
+                value:"3" //버튼 값을 숫자로 변경 
+            },
+            {
+                answer:"바닐라향",
+                weight: [0,4,1,2,2],
+                value:"4"
+            },
+        ]
+    },
+    {
+        title:"아래의 보기에서 가장 선호하는 맛과향을 선택해주세요.",
+        content:[
+            {
+                answer:"코코아 향",
+                weight:[4,3,0,0,0],
+                value:"1" //버튼 값을 숫자로 변경 
+            },
+            {
+                answer:"스모키 향",
+                weight: [0,4,1,2,2],
+                value:"2"
+            },
+            {
+                answer:"우디 향",
+                weight: [0,4,1,2,2],
+                value:"4"
+            },
+            {
+                answer:"로스팅",
+                weight:[4,3,0,0,0],
+                value:"5" //버튼 값을 숫자로 변경 
+            },
+        ]
+    },
+    {
+        title:"아래의 보기에서 가장 선호하는 맛과향을 선택해주세요.",
+        content:[
+            {
+                answer:"다크한 맛",
+                weight:[4,3,0,0,0],
+                value:"1" //버튼 값을 숫자로 변경 
+            },
+            {
+                answer:"리치한 맛",
+                weight: [0,4,1,2,2],
+                value:"2"
+            },
+            {
+                answer:"산미",
+                weight:[4,3,0,0,0],
+                value:"3" //버튼 값을 숫자로 변경 
+            },
+            {
+                answer:"단맛",
+                weight: [0,4,1,2,2],
+                value:"4"
+            },
         ]
     },
 ];

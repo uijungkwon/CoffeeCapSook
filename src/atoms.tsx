@@ -11,6 +11,32 @@ export const isMemIdAtom = atom({
     default: 0,
   });
 
+export interface ICoffee{
+  type:string;
+  coffee_id: number;
+  coffeeName:string;//커피 이름
+  tasteAndAroma:string//맛
+  compatible:string//머신
+  purchaseLink:string//구매링크
+
+}
+export const coffeeState = atom<ICoffee>({
+  key:"coffee",
+  default:{
+    type:"2",
+    coffee_id:2,
+    coffeeName:"",//커피 이름
+    tasteAndAroma:"",//맛
+    compatible:"",//머신
+    purchaseLink:"",//구매링크
+  }
+});
+
+
+export const isCoffeeIdAtom = atom({
+    key: 'isCoffeeId', //52번으로 저장되어 있음
+    default: 0,
+  });
 
 //캡슐 정보 데이터 이름 및 값
 export interface IData{
@@ -31,10 +57,3 @@ export const dataState = atom<IData[]>({
   });
 
   const BASE_URL  = 'https://port-0-coffeecapsook-3prof2llleypwbv.sel3.cloudtype.app/';
-
-  export function fetchcapsule() { //마이페이지에 저장된 캡슐 목록 가져오기
-    return fetch(`${BASE_URL}/MyPage`) //예시 URL
-    .then((response) =>
-      response.json() //"저장된 스타벅스 캡슐 목록 반환받기"
-    );
-  }
