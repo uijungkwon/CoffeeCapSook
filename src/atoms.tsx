@@ -16,6 +16,7 @@ export interface ICoffee{
   coffee_id: number;
   coffeeName:string;//커피 이름
   tasteAndAroma:string//맛
+  strength:string
   compatible:string//머신
   purchaseLink:string//구매링크
 
@@ -24,6 +25,7 @@ export const coffeeState = atom<ICoffee>({
   key:"coffee",
   default:{
     type:"2",
+    strength:"0",
     coffee_id:2,
     coffeeName:"",//커피 이름
     tasteAndAroma:"",//맛

@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from "react";
 import {RouteComponentProps,useHistory,withRouter } from "react-router-dom";
 import results from '../contents/results';
-import { coffee } from '../data/coffee';
+import { coffee} from '../data/coffee';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { ICoffee, coffeeState, dataState, isCoffeeIdAtom } from '../atoms';
 import { IData } from '../atoms';
@@ -189,6 +189,9 @@ return (
                         </li>
                         <li>
                          <h1 ><strong>맛</strong>: {coffee.tasteAndAroma}</h1>
+                        </li>
+                        <li>
+                         <h1 ><strong>커피 강도</strong>: {coffee.strength}</h1>
                         </li>
                         <li>
                          <h1 ><strong>커피 머신</strong>: {coffee.compatible}</h1>

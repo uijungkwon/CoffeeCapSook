@@ -165,8 +165,8 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
             n6:buttonValue[5],
             n7:buttonValue[6],
             n8:buttonValue[7],
-            type:"4",
-            coffee_id:"140",
+            type:"2",
+            coffee_id:"2",
           },
           {
             headers: {
@@ -179,6 +179,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
             console.log(response?.data);
             setCoffee({
               type:response?.data?.type,
+              strength:response?.data?.strength,
               coffee_id:response?.data?.coffee_id ,coffeeName:response?.data?.coffeeName, tasteAndAroma:response?.data?.tasteAndAroma,
               compatible:response?.data?.compatible, purchaseLink:response?.data?.purchaseLink
             });
