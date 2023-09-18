@@ -192,19 +192,8 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                 setNum((num)=> 0);//퀴즈 번호 0번 질문으로 초기화
                 
             }
-            getScore(item.weight);
         }
-        const getScore = (arr:number[]) => {
-            let idx = 0;
-            arr.map((item => {
-                score[0][idx] = +score[0][idx] + item;
-                if (score[0][idx] > +score[1].maxScore) {
-                    score[1].maxScore = score[0][idx];
-                    score[1].maxIdx = idx;
-                }
-                idx++;
-            }));
-        };
+        
     return (
         <Wrapper>
           <AnimatePresence>  
@@ -235,7 +224,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                   {curQuiz?.content && curQuiz?.content.map((item, index) => (
                         <Link to={`/QuizPage/${id}`} key={index} >
                             <Button 
-                                onClick={ () => onclick(item)/*() => getScore(item.weight)*/}> {item.answer}
+                                onClick={ () => onclick(item)}> {item.answer}
                             </Button>
                         </Link>
                     ))}
@@ -264,7 +253,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                   {curQuiz?.content && curQuiz?.content.map((item, index) => (
                         <Link to={`/ResultPage/${coffee.type}`} key={index}>
                             <Button 
-                                onClick={ () => onclick(item)/*() => getScore(item.weight)*/}> {item.answer}
+                                onClick={ () => onclick(item)}> {item.answer}
                             </Button>
                         </Link>
                     ))}

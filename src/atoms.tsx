@@ -1,5 +1,4 @@
-import { atom, useRecoilValue } from "recoil";
-
+import { atom } from "recoil";
 //로그인 완료 후, 반환된 이메일로 값 저장 
 export const isLoginAtom = atom({
     key: 'isLogin',
@@ -51,7 +50,7 @@ export interface IData{
     구매링크:string;
   }
 
-/*윈도우 로컬 스토리지에 저장된 데이터*/
+/*윈도우 로컬 스토리지에 저장된 데이터 - 지금은 사용 안함 */
 export const localData = localStorage.getItem('alldata');
 export const dataState = atom<IData[]>({
   key:"data", //localstorage에 저장했다가 가져옴

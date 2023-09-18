@@ -164,17 +164,17 @@ return (
                     
                     >
                      <Title>
-                        <h1  >{results[parseInt(coffee.type/*match.params.tendency*/)].title}</h1>
+                        <h1  >{results[parseInt(coffee.type)].title}</h1>
                       
                      </Title>   
                      <Content>
-                       <h1>{results[parseInt(coffee.type/*match.params.tendency*/)].content}</h1>
+                       <h1>{results[parseInt(coffee.type)].content}</h1>
                      </Content>
                      <br></br>
                      <Hr></Hr>
                      <Content>
                      <h2 style = {{color:"black",fontSize:"27px",marginBottom:"20px", fontWeight:"bold" }}>이런 커피가 잘 맞아요</h2>
-                     <h1>{results[parseInt(coffee.type/*match.params.tendency*/)].feature} </h1>
+                     <h1>{results[parseInt(coffee.type)].feature} </h1>
                      </Content>
                      <br></br>
                      <Hr></Hr>
