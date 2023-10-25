@@ -308,7 +308,7 @@ const {scrollY} = useScroll();
                                 <h1><strong>맛과향</strong> : {c.tasteAndAroma}</h1>
                               </li>
                               <li>
-                                <h1><strong>로스팅 강도</strong> : {c.tasteAndAroma}</h1>
+                                <h1><strong>로스팅 강도</strong> : {c.roasting}</h1>
                               </li>
                               <li>
                                 <h1><strong>호환 머신</strong> : {c.compatible}</h1>
