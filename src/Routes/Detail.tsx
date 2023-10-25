@@ -57,7 +57,7 @@ const Content = styled.div`
 const Box = styled(motion.div)`
   background: #ddddddc3;
   width: 300px;
-  height: 100px;
+  height: 120px;
   font-weight:bold;
   margin-top:50px;
 
