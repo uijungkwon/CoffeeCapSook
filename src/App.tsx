@@ -11,6 +11,8 @@ import ResultCard from "./components/ResultCard";
 import ResultPage from "./pages/ResultPage";
 import AllResults from "./Routes/AllResults";
 import { Detail } from "./Routes/Detail";
+import MyList from "./Routes/MyList";
+import MyHeart from "./Routes/MyHeart";
 
 function App(){
   return (
@@ -29,11 +31,14 @@ function App(){
 
        <Route path="/Login"><Login/></Route>
        <Route path="/Enroll"><Enroll/></Route>
+
        <Route path="/Mypage"><Mypage/></Route>
+       
        <Route path="/AllCap"><AllCap/></Route>
         <Route path="/"><Home/></Route>
       </Switch>
     </Router>
   );
 }
+//
 export default App;

@@ -7,8 +7,7 @@ import {RouteComponentProps,useHistory,withRouter } from "react-router-dom";
 import results from '../contents/results';
 import { coffee} from '../data/coffee';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { ICoffee, coffeeState, dataState, isCoffeeIdAtom } from '../atoms';
-import { IData } from '../atoms';
+import { ICoffeeTop3,  coffeeTop3, coffeeTop3Atom, testData,  } from '../atoms';
 const loading = require("../images/spinner.gif");
 const Wrapper = styled.div`
   overflow-x: hidden;
@@ -20,15 +19,15 @@ const Wrapper = styled.div`
   padding: 60px;
   background-size: cover;
   position: relative;
-  background-color:whitesmoke;
+  background-color:#e3e3e3;
 `;
 const Div = styled(motion.div)`//화면을 부드럽게 넘기는 모션 적용
   margin-top: 70px;
   width: 700px; 
-
   border-radius: 30px;
   box-shadow: 0px 2px 4px black;
   padding: 22px 22px 22px 22px;
+  background-color: whitesmoke;
 
   display: flex;
   align-items: center;
@@ -50,7 +49,6 @@ const divVariants = {
     }
   };
 const Title = styled.div`
-    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -59,6 +57,9 @@ const Title = styled.div`
         color:black;
         font-size:37px;
         font-weight: bold;
+        background-color: #dedddd;
+        border-radius: 10px;
+        box-shadow: 2px 2px 2px;
     }
 `;
 const Content = styled.div`
@@ -74,9 +75,10 @@ const Content = styled.div`
         color:black;
         font-size:21px;
         
+        
     strong{
       font-weight: bold;
-      background-color: lightgray;
+      //background-color: lightgray;
       border-radius: 20px;
      }
     }
@@ -124,28 +126,19 @@ const ResultCard: React.FunctionComponent<RouteComponentProps<MatchParams>>
     var url;
 
     //2) 캡슐 데이터를 업데이트 해주는 state
-    const coffee = useRecoilValue<ICoffee>(coffeeState);
-    //const [data,setData] = useRecoilState(dataState);
-    //var num =0;
-    //const getRandom = (min:number, max:number) =>Math.floor(Math.random() * (max - min) + min);//일단 랜덤 추천으로 구현
-    
-    //3) 결과 페이지 나타날 때, 렌더링
+    //const coffee = useRecoilValue<ICoffee>(coffeeState);
+
+    //3) TOP3의 데이터를 한번에 가져오는 state 
+
+    const coffeeTop= useRecoilValue<ICoffeeTop3[]>(coffeeTop3Atom);
+
+    //4) 결과 페이지 나타날 때, 렌더링
     useEffect(()=> {
       //num = getRandom(2, 143);//난수 생성
         const tick = setTimeout(() => {
             setShowResult(true); //3초 후 결과를 보여줌
-        }, 3000);
+        }, 10000);
         
-        //추천된 캡슐 데이터를 리스트 형태로 저장
-        /*setData(oldData =>{
-          const locStorageResult :IData[]= [ {id:coffee.find(item =>item.id === num)?.id || 5 , name:coffee.find(item =>item.id === num)?.name || " ",성분:coffee.find(item =>item.id === num)?.성분 || " ", 강도:coffee.find(item =>item.id === num)?.강도 || " ", 맛:coffee.find(item =>item.id === num)?.맛 || " ", 커피머신:coffee.find(item =>item.id === num)?.커피머신 || " ", 구매링크:coffee.find(item =>item.id === num)?.구매링크 || " ",  },...oldData];
-          localStorage.setItem('alldata', JSON.stringify(locStorageResult));
-         
-          //console.log(locStorageResult);
-          return locStorageResult;
-              } 
-            );
-         */   
         return () => clearTimeout(tick);
     }, []);
 return (
@@ -164,47 +157,102 @@ return (
                     
                     >
                      <Title>
-                        <h1  >{results[parseInt(coffee.type)].title}</h1>
+                        <h1  >{results[parseInt(coffeeTop[0].type)].title}</h1>
                       
                      </Title>   
                      <Content>
-                       <h1>{results[parseInt(coffee.type)].content}</h1>
+                       <h1>{results[parseInt(coffeeTop[0].type)].content}</h1>
                      </Content>
                      <br></br>
                      <Hr></Hr>
                      <Content>
-                     <h2 style = {{color:"black",fontSize:"27px",marginBottom:"20px", fontWeight:"bold" }}>이런 커피가 잘 맞아요</h2>
-                     <h1>{results[parseInt(coffee.type)].feature} </h1>
+                     <h2 style = {{color:"black",fontSize:"27px",marginBottom:"20px", fontWeight:"bold",width:"40%",borderRadius:"10px", backgroundColor:"#dedddd", boxShadow:"2px 2px 2px" }}>이런 커피가 잘 맞아요</h2>
+                     <h1>{results[parseInt(coffeeTop[0].type)].feature} </h1>
                      </Content>
                      <br></br>
                      <Hr></Hr>
                      <Content>
-                     <h2 style = {{color:"black",fontSize:"27px",marginBottom:"20px", fontWeight:"bold" }}>추천 캡슐</h2>
-                     <img style = {{width:"25%", height:"35%"}}
-                        src={require(`../images/capsule/${coffee.coffee_id}.png`)}
+                     <h2 style = {{color:"black",fontSize:"30px",marginBottom:"30px", fontWeight:"bold",borderRadius:"10px", backgroundColor:"#cc9933db", boxShadow:"2px 2px 2px"  , width:"20%"}}>TOP 1</h2>
+                     <img style = {{width:"27%", height:"27%"}}
+                        src={require(`../images/capsule/${coffeeTop[0].coffee_id}.png`)}
                       /> 
-                       <ul style = {{textAlign:"left", listStyle:"square", color:"black"}}>
-                        <li>
-                         <h1><strong>캡슐 이름</strong> : {coffee.coffeeName}</h1>
+                       <ul style = {{textAlign:"left",listStyle:"square", color:"black"}}>
+                        <li >
+                         <h1 style ={{fontSize:"20px"}}><strong>캡슐 이름</strong> : {coffeeTop[0].coffeeName}</h1>
                         </li>
                         <li>
-                         <h1 ><strong>맛</strong>: {coffee.tasteAndAroma}</h1>
+                         <h1 style ={{fontSize:"20px"}} ><strong>맛</strong>: {coffeeTop[0].tasteAndAroma}</h1>
                         </li>
                         <li>
-                         <h1 ><strong>커피 강도</strong>: {coffee.strength}</h1>
+                         <h1 style ={{fontSize:"20px"}}><strong>커피 강도</strong>: {coffeeTop[0].strength}</h1>
                         </li>
                         <li>
-                         <h1 ><strong>커피 머신</strong>: {coffee.compatible}</h1>
+                         <h1 style ={{fontSize:"20px"}}><strong>커피 머신</strong>: {coffeeTop[0].compatible}</h1>
                         </li>
                         <li>
-                         <h1><strong>구매링크</strong> :<ClickButton style = {{borderRadius:"30px ", backgroundColor:"lightgray", fontWeight:"bold"}} onClick = {()=>{url = coffee.purchaseLink;window.open(url)}}>click</ClickButton></h1>
+                         <h1 style ={{fontSize:"20px"}}><strong>구매링크</strong> :<ClickButton style = {{borderRadius:"30px ", backgroundColor:"lightgray", fontWeight:"bold"}} onClick = {()=>{url = coffeeTop[0].purchaseLink;window.open(url)}}>click</ClickButton></h1>
                         </li>
                        </ul>
+                     <br></br>
+                     <Hr></Hr>
+                     <div
+                     style = {{display:"flex",flexDirection:"row", marginBottom:"40px"}}
+                     >
+                      <div>
+                       <h2 style = {{color:"black",fontSize:"23px",marginTop:"35px",marginBottom:"10px",fontWeight:"bold" ,borderRadius:"10px", backgroundColor:"#cc9933db", boxShadow:"2px 2px 2px", width:"40%", marginLeft:"40px"}}>TOP 2</h2>
+                       <img style = {{width:"40%", height:"40%"}}
+                        src={require(`../images/capsule/${coffeeTop[1].coffee_id}.png`)}
+                      />
+                      <ul style = {{textAlign:"left", listStyle:"square",marginLeft:"60px", color:"black"}}>
+                      <li>
+                         <h1 style ={{fontSize:"18px"}}><strong>캡슐 이름</strong> : {coffeeTop[1].coffeeName}</h1>
+                        </li>
+                        <li>
+                         <h1 style ={{fontSize:"18px"}} ><strong>맛</strong>: {coffeeTop[1].tasteAndAroma}</h1>
+                        </li>
+                        <li>
+                         <h1 style ={{fontSize:"18px"}}><strong>커피 강도</strong>: {coffeeTop[1].strength}</h1>
+                        </li>
+                        <li>
+                         <h1 style ={{fontSize:"18px"}}><strong>커피 머신</strong>: {coffeeTop[1].compatible}</h1>
+                        </li>
+                        <li>
+                         <h1 style ={{fontSize:"18px"}}><strong>구매링크</strong> :<ClickButton style = {{borderRadius:"30px ", backgroundColor:"lightgray", fontWeight:"bold"}} onClick = {()=>{url = coffeeTop[1].purchaseLink;window.open(url)}}>click</ClickButton></h1>
+                        </li>
+                      </ul>
+                      </div>
+
+
+                      <div style = {{}}>
+                       <h2 style = {{color:"black",fontSize:"23px",marginTop:"35px",marginBottom:"20px",fontWeight:"bold" ,borderRadius:"10px", backgroundColor:"#cc9933db", boxShadow:"2px 2px 2px", width:"40%", marginLeft:"65px" }}>TOP 3</h2>
+                       <img style = {{width:"40%", height:"40%"}}
+                        src={require(`../images/capsule/${coffeeTop[2].coffee_id}.png`)}
+                      />
+                      <ul style = {{textAlign:"left", listStyle:"square",marginLeft:"80px", color:"black"}}>
+                      <li>
+                         <h1 style ={{fontSize:"18px"}}><strong>캡슐 이름</strong> : {coffeeTop[2].coffeeName}</h1>
+                        </li>
+                        <li>
+                         <h1 style ={{fontSize:"18px"}}><strong>맛</strong>: {coffeeTop[2].tasteAndAroma}</h1>
+                        </li>
+                        <li>
+                         <h1 style ={{fontSize:"18px"}}><strong>커피 강도</strong>: {coffeeTop[2].strength}</h1>
+                        </li>
+                        <li>
+                         <h1 style ={{fontSize:"18px"}}><strong>커피 머신</strong>: {coffeeTop[2].compatible}</h1>
+                        </li>
+                        <li>
+                         <h1 style ={{fontSize:"18px", marginBottom:"-200px"}}><strong>구매링크</strong> :<ClickButton style = {{borderRadius:"30px ", backgroundColor:"lightgray", fontWeight:"bold"}} onClick = {()=>{url = coffeeTop[2].purchaseLink;window.open(url)}}>click</ClickButton></h1>
+                        </li>
+                      </ul>
+                      </div>
+
+                      
+                    </div>
+
                      </Content>
-                     <br></br>
-                     <br></br>
                        <Link to = "/AllResults"><Button> 전체 유형 보기</Button></Link>
-                       <Link to = "/QuizPage/1"><Button>다시하기</Button></Link>
+                       <Link to = "/QuizPage/1"><Button>다시 하기</Button></Link>
                     </Div>
                  
                 }

@@ -133,7 +133,16 @@ function Login(){
       console.log(error?.response?.data);
       window.alert(error);
     })
-  
+    
+
+    //로컬 테스트용으로 만든 코드!!!!!!
+    /*
+    setLog((log) => "kuj08036410@gmail.com");//로그인 완료되면, log값을 반환받은 이메일 값으로 변경
+    setMem((mem)=> 52); //52
+      
+    history.push('/') //로그인 후 홈화면으로 돌아가기
+    ////////////////
+*/
     setValue("email", "");
     setValue("pw","");
   }

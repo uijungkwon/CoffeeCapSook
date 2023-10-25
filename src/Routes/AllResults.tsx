@@ -56,6 +56,7 @@ const Box = styled(motion.div)`
 
 function AllResults(){
 
+
     return (
         <>
         <Wrapper>

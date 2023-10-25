@@ -6,12 +6,10 @@ import { useEffect, useState } from "react";
 import { RouteComponentProps,withRouter } from "react-router-dom";
 import quiz from "../contents/questions";
 import { useRecoilState, useRecoilValue } from 'recoil';
-import {  ICoffee, coffeeState, isCoffeeIdAtom, isMemIdAtom } from '../atoms';
+import {   ICoffeeTop3, coffeeTop3, coffeeTop3Atom, isMemIdAtom } from '../atoms';
 import { useQuery } from 'react-query';
 import axios from 'axios';
-
 const Bg = require("../images/coffee.jpg");
-
 const Wrapper = styled.div`
   overflow-x: hidden;
   height:100vh;
@@ -41,7 +39,6 @@ const Div = styled(motion.div)`
     cursor: pointer;
   }
 `;
-
 //화면 넘길 때 나타나는 애니메이션 효과 적용
 const divVariants = {
     initial: {
@@ -62,12 +59,10 @@ const Title = styled.div`
     border: none;
 	  border-radius: 10px;
 `;
-
 const ImgBox = styled.div`
     width:540px;
     height:300px;
 `;
-
 const Button = styled.button`
 	width:90px;
   height:40px;
@@ -87,11 +82,9 @@ const Button = styled.button`
       cursor: pointer;
     }
 `;
-
 interface MatchParams {
     id:string;
 };
-
 interface IContent{//질문에 대한 대답, 대답에 대한 점수
     answer:string;
     weight:number[];
@@ -101,37 +94,21 @@ interface IQuiz {//질문 제목, 질문 내용
     title:string;
     content: IContent[];
 };
-interface IScore {//점수 매길 때 최고 번호, 최고 점수 
-    maxIdx:number;
-    maxScore:number;
-};
 const QuizWrapper = styled.div`
   text-align : center;
   margin : 0;
   padding : 0;
 `;
-//배열에 타입 지정 - 점수 배정
-const score:[number[], IScore] = [
-    [0, 0, 0, 0, 0, 0, 0, 0],  //score[0]
-    {
-        'maxScore': 0,         //score[1]
-        'maxIdx':0, 
-    }
-];
 //사용자가 누른 버튼 값 저장
 const buttonValue:string[] = ["0","0","0","0","0","0","0","0"];
-
-/* 반환 데이터 값 예시로 작성 */
-interface ITest{
-  capsule_type:string;
-  capsule_id:string; //캡슐 id만 넘겨 받을지, 전체 속성을 다 줄지 의논!
-};
-
 const QuizCard: React.FC<RouteComponentProps<MatchParams>>
       = ({match}) => {//match는 퀴즈 번호 ex) 1,2,3 ...
+        
+
         //0) recoil 값 가져오기  & API fetch 하기
-        const member_id = useRecoilValue(isMemIdAtom);
-        const [coffee, setCoffee]= useRecoilState<ICoffee>(coffeeState);
+        const member_id = useRecoilValue(isMemIdAtom);//나의 멤버 아이디 값
+        const [coffee, setCoffee]= useRecoilState<ICoffeeTop3[]>(coffeeTop3Atom);//커피 객체 담을 변수 
+        
 
         //1) 퀴즈 페이지 넘길 때마다 퀴즈 번호 렌더링
         const [curQuiz, setQuiz] = useState<IQuiz>();
@@ -149,14 +126,14 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
         //3) 버튼 클릭시, 결과를 나타내기 위한 점수 누적
         const [num,setNum] = useState(0);
         const onclick =(item:IContent)=> {
-            
             buttonValue[num] = item.value; //사용자가 선택한 버튼 번호를 입력
             setNum((num)=> num+1);
             
             if(num === 7){
-                console.log(buttonValue); //=>> 해당 배열을 서버에 전송할 수 있음 - 정상 출력
+                console.log(buttonValue); //=>> 해당 배열을 서버에 전송할 수 있음
+          
           axios.post( `https://port-0-coffeecapsook-3prof2llleypwbv.sel3.cloudtype.app/favorite-test/${member_id}`,
-          { //왼쪽 값: 서버 데이터 변수 이름(일단 샘플로 작성), 오른쪽 값: 프론트 변수 이름 
+          { 
             n1:buttonValue[0],
             n2:buttonValue[1],
             n3:buttonValue[2],
@@ -165,8 +142,11 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
             n6:buttonValue[5],
             n7:buttonValue[6],
             n8:buttonValue[7],
-            type:"2",
-            coffee_id:"2",
+
+            type:"4",
+            coffee_id1:"34",
+            coffee_id2:"35",
+            coffee_id3:"37",
           },
           {
             headers: {
@@ -177,12 +157,7 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
           })
           .then((response) => {//서버에 데이터가 제대로 전송되었을 경우
             console.log(response?.data);
-            setCoffee({
-              type:response?.data?.type,
-              strength:response?.data?.strength,
-              coffee_id:response?.data?.coffee_id ,coffeeName:response?.data?.coffeeName, tasteAndAroma:response?.data?.tasteAndAroma,
-              compatible:response?.data?.compatible, purchaseLink:response?.data?.purchaseLink
-            });
+            setCoffee((coffee) => response?.data);//목록 전체를 가져옴
           }).catch((error) => { //서버에 데이터가 제대로 전송되지 않은 경우
 
             console.log("서버와 연결되지 않습니다");
@@ -193,7 +168,6 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                 
             }
         }
-        
     return (
         <Wrapper>
           <AnimatePresence>  
@@ -250,13 +224,15 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
                 <div
                 style = {{flexDirection: "row"}}
                   >
-                  {curQuiz?.content && curQuiz?.content.map((item, index) => (
-                        <Link to={`/ResultPage/${coffee.type}`} key={index}>
+                    {curQuiz?.content && curQuiz?.content.map((item, index) => (
+                    //"추천 결과 유형 보여줌 ->"
+                        <Link to={`/ResultPage/${coffee[0]?.type}`} key={index}> 
                             <Button 
                                 onClick={ () => onclick(item)}> {item.answer}
                             </Button>
                         </Link>
                     ))}
+                  
                 </div>
                 </Div>
             }
@@ -266,5 +242,15 @@ const QuizCard: React.FC<RouteComponentProps<MatchParams>>
         </Wrapper>
     );
 };
+/*
 
+{curQuiz?.content && curQuiz?.content.map((item, index) => (
+                    //"추천 결과 유형 보여줌 ->"
+                        <Link to={`/ResultPage/${coffee[0].type}`} key={index}> 
+                            <Button 
+                                onClick={ () => onclick(item)}> {item.answer}
+                            </Button>
+                        </Link>
+                    ))}
+*/
 export default withRouter(QuizCard);

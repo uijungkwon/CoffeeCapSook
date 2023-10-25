@@ -153,7 +153,7 @@ function Header(){
                 </Link>
               </Item>
                 <Item>
-                  <Link to="/Mypage">
+                  <Link to="/Mypage/MyList">
                     마이페이지 {myMatch?.isExact ? <Circle layoutId="circle" /> : null}
                   </Link>
                 </Item>
