@@ -1,46 +1,13 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+1) 프로젝트 명: CoffeeCapsook
+2) 프로젝트 내용: 수많은 커피브랜드에서 커피 캡슐이 출시되어 사용자들은 캡슐을 선택하는 것에 어려움을 겪음. 따라서 사용자의 취향에 따라 커피 캡슐을 추천하는 웹 페이지 개발
+3) 프로젝트 내의 역할
+   - react 사용하여 프론트 엔드 담당
+   - 아래 5)에 해당하는 프로젝트 기능들 모두 구현
+5) 프로젝트 기능
+   - 회원가입 /로그인 : 로그인을 진행 해야 웹사이트 이용 가능
+   - 취향 테스트 페이지 : 총 8개의 질문으로 구성되어있고, 사용자가 질문에 대한 답을 모두 체크 하면 자동으로 결과 페이지로 이동
+   - 추천 결과 페이지 : TOP3의 추천 캡슐을 보여주며, 원두 유형*원두 특징 *캡슐 특징을 한 화면에 모두 보여줌
+   - 전체 원두 유형 페이지: 내가 추천 받은 캡슐 외에도 다른 원두 유형이 궁금하면 이 페이지에서 확인 가능, 원두 특징이 기재되어있음
+   - 전체 캡슐 페이지: 데이터 분석 팀에서 모은 당시 모든 캡슐의 데이터가 모두 있음 , 커피 브랜드 별로 카테고리가 나뉘어져 있음
+   - 마이페이지: 내가 저장한 커피 캡슐들 확인 가능
+6) 프로젝트 사용법: 웹사이트에 로그인 및 회원가입 -> '취향 테스트 페이지' 선택 -> '추천 결과 페이지'에서 캡슐을 추천 받음
